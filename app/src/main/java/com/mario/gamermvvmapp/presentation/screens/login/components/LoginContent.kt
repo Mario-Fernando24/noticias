@@ -1,6 +1,7 @@
 package com.mario.gamermvvmapp.presentation.screens.login.components
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -14,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -22,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import com.mario.gamermvvmapp.R
+import com.mario.gamermvvmapp.domain.model.Response
 import com.mario.gamermvvmapp.presentation.components.DefauldTextField
 import com.mario.gamermvvmapp.presentation.components.DefaultButton
 import com.mario.gamermvvmapp.presentation.screens.login.LoginViewModel
@@ -30,6 +33,8 @@ import com.mario.gamermvvmapp.presentation.ui.theme.greyFondo
 
 @Composable
 fun LoginContent(viewModel: LoginViewModel= hiltViewModel()){
+
+    val loginFlow = viewModel.loginFlow.collectAsState()
 
     Box(
         modifier = Modifier .fillMaxWidth(),
@@ -118,12 +123,34 @@ fun LoginContent(viewModel: LoginViewModel= hiltViewModel()){
                 DefaultButton(
                     text = "INICIAR SESIÓN",
                     onClick ={
-                        Log.d("mario", "Email: ${viewModel.email.value}")
-                        Log.d("mario", "password: ${viewModel.password.value}")
-
+                       viewModel.login()
                     },
                     enable = viewModel.isEnableLoginButton
                 )
+
+            }
+        }
+    }
+    loginFlow.value.let {
+        when(it){
+            //si se encuentra en ese estado que muestre un progressBar que todavia se encuentra en proceso
+            Response.Loading ->{
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize()
+                ){
+                    CircularProgressIndicator()
+                }
+            }
+
+            is Response.Success->{
+                Log.d("mario","aqui se hizo el login excelente")
+                Toast.makeText(LocalContext.current, "Usuario Logueado",Toast.LENGTH_LONG).show()
+            }
+
+            is Response.Failure->{
+                Log.d("mario","error al momento de loguearse")
+                Toast.makeText(LocalContext.current, it.exception?.message ?: "Hubo en error en la contraseña",Toast.LENGTH_LONG).show()
 
             }
         }
