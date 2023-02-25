@@ -5,6 +5,8 @@ package com.mario.gamermvvmapp.domain.use_cases.auth
 data class AuthUseCases (
 
    val getCurrentUserg: GetCurrentUser,
-   val login: Login
+   val login: Login,
+   val logout: Logout
+
 
 )

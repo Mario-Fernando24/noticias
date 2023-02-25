@@ -10,4 +10,6 @@ interface AuthRepository {
     val currentUser:FirebaseUser?
    // la respuesta que nos devuelve al momento de logearno es FirebaseUser
     suspend fun login(email:String , password: String): Response<FirebaseUser>
+
+    fun  logout()
 }

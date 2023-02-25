@@ -23,16 +23,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import com.mario.gamermvvmapp.R
 import com.mario.gamermvvmapp.domain.model.Response
 import com.mario.gamermvvmapp.presentation.components.DefauldTextField
 import com.mario.gamermvvmapp.presentation.components.DefaultButton
+import com.mario.gamermvvmapp.presentation.navigation.AppScreen
 import com.mario.gamermvvmapp.presentation.screens.login.LoginViewModel
 import com.mario.gamermvvmapp.presentation.ui.theme.Darkgray700
 import com.mario.gamermvvmapp.presentation.ui.theme.greyFondo
 
 @Composable
-fun LoginContent(viewModel: LoginViewModel= hiltViewModel()){
+fun LoginContent(navController: NavController, viewModel: LoginViewModel= hiltViewModel()){
 
     val loginFlow = viewModel.loginFlow.collectAsState()
 
@@ -144,6 +146,11 @@ fun LoginContent(viewModel: LoginViewModel= hiltViewModel()){
             }
 
             is Response.Success->{
+                //efectos secundarios
+                LaunchedEffect(Unit){
+                    //cuando la respuesta es exitosa nos envie a la siguiente pantalla
+                    navController.navigate(route = AppScreen.Profile.route)
+                }
                 Log.d("mario","aqui se hizo el login excelente")
                 Toast.makeText(LocalContext.current, "Usuario Logueado",Toast.LENGTH_LONG).show()
             }

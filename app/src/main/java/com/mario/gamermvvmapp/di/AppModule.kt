@@ -6,6 +6,7 @@ import com.mario.gamermvvmapp.domain.repository.AuthRepository
 import com.mario.gamermvvmapp.domain.use_cases.auth.AuthUseCases
 import com.mario.gamermvvmapp.domain.use_cases.auth.GetCurrentUser
 import com.mario.gamermvvmapp.domain.use_cases.auth.Login
+import com.mario.gamermvvmapp.domain.use_cases.auth.Logout
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,6 +26,7 @@ object AppModule {
     @Provides
     fun providerAuthUseCase(repository: AuthRepository) = AuthUseCases(
         getCurrentUserg = GetCurrentUser(repository),
-        login = Login(repository)
+        login = Login(repository),
+        logout = Logout(repository)
     )
 }
