@@ -149,7 +149,9 @@ fun LoginContent(navController: NavController, viewModel: LoginViewModel= hiltVi
                 //efectos secundarios
                 LaunchedEffect(Unit){
                     //cuando la respuesta es exitosa nos envie a la siguiente pantalla
-                    navController.navigate(route = AppScreen.Profile.route)
+                    navController.navigate(route = AppScreen.Profile.route){
+                        popUpTo(AppScreen.Login.route){ inclusive=true }
+                    }
                 }
                 Log.d("mario","aqui se hizo el login excelente")
                 Toast.makeText(LocalContext.current, "Usuario Logueado",Toast.LENGTH_LONG).show()

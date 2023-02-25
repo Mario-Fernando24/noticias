@@ -20,7 +20,9 @@ fun ProfileScreen (navController: NavHostController, viewModel: ProfileViewModel
                 text = "Cerrar session",
                 onClick = {
                     viewModel.logout()
-                    navController.navigate(route = AppScreen.Login.route)
+                    navController.navigate(route = AppScreen.Login.route){
+                        popUpTo(AppScreen.Profile.route){ inclusive=true }
+                    }
                 }
             )
         },
