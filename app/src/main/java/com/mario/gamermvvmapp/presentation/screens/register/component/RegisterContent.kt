@@ -1,11 +1,14 @@
 package com.mario.gamermvvmapp.presentation.screens.register.component
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -16,6 +19,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -23,9 +27,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.mario.gamermvvmapp.R
+import com.mario.gamermvvmapp.domain.model.Response
 import com.mario.gamermvvmapp.presentation.components.DefauldTextField
 import com.mario.gamermvvmapp.presentation.components.DefaultButton
+import com.mario.gamermvvmapp.presentation.navigation.AppScreen
 import com.mario.gamermvvmapp.presentation.screens.login.LoginViewModel
 import com.mario.gamermvvmapp.presentation.screens.register.RegisterViewModel
 import com.mario.gamermvvmapp.presentation.ui.theme.Darkgray700
@@ -33,13 +40,15 @@ import com.mario.gamermvvmapp.presentation.ui.theme.greyFondo
 import com.mario.gamermvvmapp.presentation.ui.theme.red500
 
 @Composable
-fun RegisterContent (viewModel: RegisterViewModel = hiltViewModel()){
+fun RegisterContent (navController: NavController, viewModel: RegisterViewModel = hiltViewModel()){
+
+    //para traernos el estado en el cual se encuentra nuestra petición
+    val registerFlow = viewModel.registerFlow.collectAsState()
 
     Box(
         modifier = Modifier .fillMaxWidth(),
         //  horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
 
         Box(
             modifier = Modifier
@@ -147,15 +156,44 @@ fun RegisterContent (viewModel: RegisterViewModel = hiltViewModel()){
 
                     text = "REGISTRATE",
                     onClick ={
-
+                       viewModel.onRegister()
                     },
                     enable =  viewModel.isEnableRegisterButton
                 )
 
             }
         }
+    }
 
+    registerFlow.value.let {
+        when(it){
+            //si se encuentra en ese estado que muestre un progressBar que todavia se encuentra en proceso
+            Response.Loading ->{
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier.fillMaxSize()
+                ){
+                    CircularProgressIndicator()
+                }
+            }
+           //cuando es una clase sellada utilizamos is
+            is Response.Success->{
+                //efectos secundarios
+                LaunchedEffect(Unit){
+                    navController.popBackStack(AppScreen.Login.route, true)
+                    //cuando la respuesta es exitosa nos envie a la siguiente pantalla
+                    navController.navigate(route = AppScreen.Profile.route)
+                }
+            }
 
+            is Response.Failure->{
+                Log.d("mario","error al momento de loguearse")
+                Toast.makeText(
+                    LocalContext.current, it.exception?.message ?: "Hubo en error en la contraseña",
+                    Toast.LENGTH_LONG).show()
+
+            }
+        }
     }
 }
 
@@ -169,5 +207,5 @@ fun RegisterContent (viewModel: RegisterViewModel = hiltViewModel()){
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
-    RegisterContent()
+    //RegisterContent()
 }

@@ -30,7 +30,7 @@ fun RegisterScreen(navController: NavHostController) {
             )
         },
         content = {
-            RegisterContent()
+            RegisterContent(navController)
         },
         bottomBar = {
 

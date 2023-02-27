@@ -3,10 +3,7 @@ package com.mario.gamermvvmapp.di
 import com.google.firebase.auth.FirebaseAuth
 import com.mario.gamermvvmapp.data.repository.AuthRepositoryImp
 import com.mario.gamermvvmapp.domain.repository.AuthRepository
-import com.mario.gamermvvmapp.domain.use_cases.auth.AuthUseCases
-import com.mario.gamermvvmapp.domain.use_cases.auth.GetCurrentUser
-import com.mario.gamermvvmapp.domain.use_cases.auth.Login
-import com.mario.gamermvvmapp.domain.use_cases.auth.Logout
+import com.mario.gamermvvmapp.domain.use_cases.auth.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,6 +24,7 @@ object AppModule {
     fun providerAuthUseCase(repository: AuthRepository) = AuthUseCases(
         getCurrentUserg = GetCurrentUser(repository),
         login = Login(repository),
-        logout = Logout(repository)
+        logout = Logout(repository),
+        register = Register(repository)
     )
 }

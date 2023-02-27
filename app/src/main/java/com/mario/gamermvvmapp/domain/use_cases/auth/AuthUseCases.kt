@@ -6,7 +6,8 @@ data class AuthUseCases (
 
    val getCurrentUserg: GetCurrentUser,
    val login: Login,
-   val logout: Logout
+   val logout: Logout,
+   val register: Register
 
 
 )

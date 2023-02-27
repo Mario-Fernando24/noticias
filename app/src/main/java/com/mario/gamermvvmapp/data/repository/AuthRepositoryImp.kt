@@ -3,6 +3,7 @@ package com.mario.gamermvvmapp.data.repository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.mario.gamermvvmapp.domain.model.Response
+import com.mario.gamermvvmapp.domain.model.User
 import com.mario.gamermvvmapp.domain.repository.AuthRepository
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -25,6 +26,19 @@ class AuthRepositoryImp  @Inject constructor(private val firebaseAuth: FirebaseA
               Response.Failure(e)
         }
     }
+
+    override suspend fun register(user: User): Response<FirebaseUser> {
+
+        return try {
+            val result = firebaseAuth.createUserWithEmailAndPassword(user.email, user.password).await()
+            Response.Success(result.user!!)
+        }catch (e: Exception){
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+
+    }
+
 
     //cerrar la session del usuario
     override fun logout() {
