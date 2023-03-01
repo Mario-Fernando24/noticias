@@ -36,7 +36,6 @@ import com.mario.gamermvvmapp.presentation.ui.theme.greyFondo
 @Composable
 fun LoginContent(navController: NavController, viewModel: LoginViewModel= hiltViewModel()){
 
-    val loginFlow = viewModel.loginFlow.collectAsState()
 
     Box(
         modifier = Modifier .fillMaxWidth(),
@@ -133,36 +132,6 @@ fun LoginContent(navController: NavController, viewModel: LoginViewModel= hiltVi
             }
         }
     }
-    loginFlow.value.let {
-        when(it){
-            //si se encuentra en ese estado que muestre un progressBar que todavia se encuentra en proceso
-            Response.Loading ->{
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize()
-                ){
-                    CircularProgressIndicator()
-                }
-            }
 
-            is Response.Success->{
-                //efectos secundarios
-                LaunchedEffect(Unit){
-                    //cuando la respuesta es exitosa nos envie a la siguiente pantalla
-                    navController.navigate(route = AppScreen.Profile.route){
-                        popUpTo(AppScreen.Login.route){ inclusive=true }
-                    }
-                }
-                Log.d("mario","aqui se hizo el login excelente")
-                Toast.makeText(LocalContext.current, "Usuario Logueado",Toast.LENGTH_LONG).show()
-            }
-
-            is Response.Failure->{
-                Log.d("mario","error al momento de loguearse")
-                Toast.makeText(LocalContext.current, it.exception?.message ?: "Hubo en error en la contraseña",Toast.LENGTH_LONG).show()
-
-            }
-        }
-    }
 }
 

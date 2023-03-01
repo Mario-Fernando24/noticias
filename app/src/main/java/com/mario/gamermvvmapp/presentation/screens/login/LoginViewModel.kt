@@ -29,24 +29,22 @@ class LoginViewModel @Inject constructor(private val authUseCases: AuthUseCases)
 
     var isEnableLoginButton = false
 
-    private val _loginFlow = MutableStateFlow<Response<FirebaseUser>?>(null)
-    val loginFlow: StateFlow<Response<FirebaseUser>?> =_loginFlow
-
+    var loginResponse by mutableStateOf<Response<FirebaseUser>?>(null)
      val currenUserr=authUseCases.getCurrentUserg()
     //lo primero que ejecuta
     init {
        //preguntar si el currentUserr "usuario" llega vacio
         //session iniciada
         if(currenUserr!=null){
-            _loginFlow.value = Response.Success(currenUserr)
+            loginResponse = Response.Success(currenUserr)
         }
     }
 
     //cuando es una funcion con currutina utilizamos
     fun login() = viewModelScope.launch {
-        _loginFlow.value= Response.Loading
+        loginResponse= Response.Loading
         val resul= authUseCases.login(email, password)
-        _loginFlow.value= resul
+        loginResponse= resul
     }
     fun validateEmail(){
 

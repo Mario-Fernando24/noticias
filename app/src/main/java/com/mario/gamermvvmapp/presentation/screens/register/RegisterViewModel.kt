@@ -2,6 +2,7 @@ package com.mario.gamermvvmapp.presentation.screens.register
 
 import android.util.Log
 import android.util.Patterns
+import androidx.compose.runtime.*
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -21,33 +22,33 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCases, val  usersUseCase: UsersUseCase): ViewModel() {
 
-    var userName: MutableState<String> = mutableStateOf("")
-    var isUserNameValid: MutableState<Boolean> = mutableStateOf(false)
-    var userNameErrorMsg: MutableState<String> = mutableStateOf("")
+    var userName: String by  mutableStateOf("")
+    var isUserNameValid: Boolean by  mutableStateOf(false)
+    var userNameErrorMsg: String by  mutableStateOf("")
 
-    var email: MutableState<String> = mutableStateOf("")
-    var isEmailValid: MutableState<Boolean> = mutableStateOf(false)
-    var EmailErrorMsg: MutableState<String> = mutableStateOf("")
+    var email: String by  mutableStateOf("")
+    var isEmailValid: Boolean by  mutableStateOf(false)
+    var EmailErrorMsg: String by  mutableStateOf("")
 
-    var password: MutableState<String> = mutableStateOf("")
-    var isPasswordValid: MutableState<Boolean> = mutableStateOf(false)
-    var PasswordErrorMsg: MutableState<String> = mutableStateOf("")
+    var password: String by  mutableStateOf("")
+    var isPasswordValid: Boolean by  mutableStateOf(false)
+    var PasswordErrorMsg:String by  mutableStateOf("")
 
-    var confirPassword: MutableState<String> = mutableStateOf("")
-    var isconfirPasswordValid: MutableState<Boolean> = mutableStateOf(false)
-    var confirPasswordErrorMsg: MutableState<String> = mutableStateOf("")
+    var confirPassword: String by  mutableStateOf("")
+    var isconfirPasswordValid: Boolean by  mutableStateOf(false)
+    var confirPasswordErrorMsg: String by  mutableStateOf("")
 
     var isEnableRegisterButton = false
 
-    private val _registerFlow = MutableStateFlow<Response<FirebaseUser>?>(null)
-    val registerFlow: StateFlow<Response<FirebaseUser>?> =_registerFlow
+
+    var _registerFlow by mutableStateOf<Response<FirebaseUser>?>(null)
 
     var user = User()
 
     fun onRegister(){
-        user.username=userName.value
-        user.email=email.value
-        user.password=password.value
+        user.username=userName
+        user.email=email
+        user.password=password
 
 
         register(user)
@@ -55,10 +56,10 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
 
     fun register(user: User)= viewModelScope.launch{
 
-        _registerFlow.value = Response.Loading
+        _registerFlow = Response.Loading
         val resul= authUseCases.register(user)
         //resultado que nos devolvio esa peticion
-        _registerFlow.value = resul
+        _registerFlow = resul
     }
 
     fun createUser() = viewModelScope.launch{
@@ -68,12 +69,12 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
 
     fun validateUserName(){
 
-        if(userName.value.length>=3){
-            isUserNameValid.value=true
-            userNameErrorMsg.value=""
+        if(userName.length>=3){
+            isUserNameValid=true
+            userNameErrorMsg=""
         }else{
-            isUserNameValid.value=false
-            userNameErrorMsg.value="El usuario no es valido"
+            isUserNameValid=false
+            userNameErrorMsg="El usuario no es valido"
         }
         enableRegisterButton()
     }
@@ -83,35 +84,35 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
     fun validateEmail(){
 
         //SABER SI ES UN EMAIL VALIDO
-        if(Patterns.EMAIL_ADDRESS.matcher(email.value).matches()){
-            isEmailValid.value=true
-            EmailErrorMsg.value=""
+        if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            isEmailValid=true
+            EmailErrorMsg=""
         }else{
-            isEmailValid.value=false
-            EmailErrorMsg.value="El email no es valido"
+            isEmailValid=false
+            EmailErrorMsg="El email no es valido"
         }
         enableRegisterButton()
     }
 
 
     fun validatePassword(){
-        Log.d("marioferokoko",""+  password.value.toString())
-        Log.d("mariofer",""+isLettersOrDigits(password.value))
-      if(isLettersOrDigits(password.value)) {
+        Log.d("marioferokoko",""+  password.toString())
+        Log.d("mariofer",""+isLettersOrDigits(password))
+      if(isLettersOrDigits(password)) {
 
           //SABER SI ES UN EMAIL VALIDO
-          if (password.value.length >= 8) {
-              isPasswordValid.value = true
-              PasswordErrorMsg.value = ""
+          if (password.length >= 8) {
+              isPasswordValid = true
+              PasswordErrorMsg = ""
           } else {
-              isPasswordValid.value = false
-              PasswordErrorMsg.value = "Almenos 8 caracteres"
+              isPasswordValid = false
+              PasswordErrorMsg = "Almenos 8 caracteres"
           }
           validateconfirmPassword()
           enableRegisterButton()
       }else{
-          isPasswordValid.value = false
-          PasswordErrorMsg.value = "Su contraseña debe ser alfanumerica"
+          isPasswordValid = false
+          PasswordErrorMsg = "Su contraseña debe ser alfanumerica"
 
       }
 
@@ -119,19 +120,19 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
 
     fun validateconfirmPassword(){
 
-        if(password.value==confirPassword.value){
-            isconfirPasswordValid.value=true
-            confirPasswordErrorMsg.value=""
+        if(password==confirPassword){
+            isconfirPasswordValid=true
+            confirPasswordErrorMsg=""
         }else{
-            isconfirPasswordValid.value=false
-            confirPasswordErrorMsg.value="La contraseña no coinciden"
+            isconfirPasswordValid=false
+            confirPasswordErrorMsg="La contraseña no coinciden"
         }
         enableRegisterButton()
 
     }
 
     fun enableRegisterButton(){
-        isEnableRegisterButton = isUserNameValid.value && isEmailValid.value && isPasswordValid.value && isconfirPasswordValid.value
+        isEnableRegisterButton = isUserNameValid && isEmailValid && isPasswordValid && isconfirPasswordValid
     }
 
 

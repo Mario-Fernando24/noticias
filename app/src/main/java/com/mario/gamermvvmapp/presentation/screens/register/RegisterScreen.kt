@@ -15,6 +15,7 @@ import com.mario.gamermvvmapp.presentation.components.DefaultTolbar
 import com.mario.gamermvvmapp.presentation.screens.login.LoginScreen
 import com.mario.gamermvvmapp.presentation.screens.login.components.LoginBottonBar
 import com.mario.gamermvvmapp.presentation.screens.login.components.LoginContent
+import com.mario.gamermvvmapp.presentation.screens.register.component.Register
 import com.mario.gamermvvmapp.presentation.screens.register.component.RegisterContent
 import com.mario.gamermvvmapp.presentation.ui.theme.GamerMvvmAppTheme
 
@@ -36,6 +37,7 @@ fun RegisterScreen(navController: NavHostController) {
 
         }
     )
+    Register(navController)
 }
 
 @Preview(showBackground = true, showSystemUi = true)

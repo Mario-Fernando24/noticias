@@ -8,13 +8,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.mario.gamermvvmapp.presentation.screens.login.components.Login
 import com.mario.gamermvvmapp.presentation.screens.login.components.LoginBottonBar
 import com.mario.gamermvvmapp.presentation.screens.login.components.LoginContent
 import com.mario.gamermvvmapp.presentation.ui.theme.GamerMvvmAppTheme
 
 //creo un componente
 @Composable
-fun LoginScreen (navController: NavHostController){
+fun LoginScreen(navController: NavHostController){
 
     Scaffold (
         topBar = {},
@@ -25,6 +26,8 @@ fun LoginScreen (navController: NavHostController){
             LoginBottonBar(navController)
         }
     )
+    //manejar el estado de la petición de login
+    Login(navController)
 }
 
 

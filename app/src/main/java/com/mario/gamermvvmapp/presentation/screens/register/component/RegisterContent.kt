@@ -42,9 +42,6 @@ import com.mario.gamermvvmapp.presentation.ui.theme.red500
 @Composable
 fun RegisterContent (navController: NavController, viewModel: RegisterViewModel = hiltViewModel()){
 
-    //para traernos el estado en el cual se encuentra nuestra petición
-    val registerFlow = viewModel.registerFlow.collectAsState()
-
     Box(
         modifier = Modifier .fillMaxWidth(),
         //  horizontalAlignment = Alignment.CenterHorizontally
@@ -100,12 +97,12 @@ fun RegisterContent (navController: NavController, viewModel: RegisterViewModel 
 
                 DefauldTextField(
                     modifier = Modifier.padding(top = 25.dp),
-                    value = viewModel.userName.value,
-                    onValueChange = {  viewModel.userName.value = it},
+                    value = viewModel.userName,
+                    onValueChange = {  viewModel.userName = it},
                     label = "Nombre de usuario",
                     icon = Icons.Default.Person,
                     keyboardType = KeyboardType.Text,
-                    errorMsg =viewModel.userNameErrorMsg.value,
+                    errorMsg =viewModel.userNameErrorMsg,
                     validateField = {
                         viewModel.validateUserName()
                     }
@@ -113,12 +110,12 @@ fun RegisterContent (navController: NavController, viewModel: RegisterViewModel 
 
                 DefauldTextField(
                     modifier = Modifier.padding(top = 5.dp),
-                    value = viewModel.email.value,
-                    onValueChange = {  viewModel.email.value = it},
+                    value = viewModel.email,
+                    onValueChange = {  viewModel.email = it},
                     label = "Correo electronico",
                     icon = Icons.Default.Email,
                     keyboardType = KeyboardType.Email,
-                    errorMsg =viewModel.EmailErrorMsg.value,
+                    errorMsg =viewModel.EmailErrorMsg,
                     validateField = {
                         viewModel.validateEmail()
                     }
@@ -126,12 +123,12 @@ fun RegisterContent (navController: NavController, viewModel: RegisterViewModel 
 
                 DefauldTextField(
                     modifier = Modifier.padding(top = 5.dp),
-                    value = viewModel.password.value,
-                    onValueChange = { viewModel.password.value = it },
+                    value = viewModel.password,
+                    onValueChange = { viewModel.password = it },
                     label = "Contraseña",
                     icon = Icons.Default.Lock,
                     hideText = true,
-                    errorMsg = viewModel.PasswordErrorMsg.value,
+                    errorMsg = viewModel.PasswordErrorMsg,
                     validateField = {
                         viewModel.validatePassword()
                     }
@@ -140,12 +137,12 @@ fun RegisterContent (navController: NavController, viewModel: RegisterViewModel 
 
                 DefauldTextField(
                     modifier = Modifier.padding(top = 0.dp),
-                    value = viewModel.confirPassword.value,
-                    onValueChange = { viewModel.confirPassword.value = it },
+                    value = viewModel.confirPassword,
+                    onValueChange = { viewModel.confirPassword = it },
                     label = "Confirmar contraseña",
                     icon = Icons.Outlined.Lock,
                     hideText = true,
-                    errorMsg = viewModel.confirPasswordErrorMsg.value,
+                    errorMsg = viewModel.confirPasswordErrorMsg,
                     validateField = {
                         viewModel.validateconfirmPassword()
                     }
@@ -165,38 +162,6 @@ fun RegisterContent (navController: NavController, viewModel: RegisterViewModel 
         }
     }
 
-    registerFlow.value.let {
-        when(it){
-            //si se encuentra en ese estado que muestre un progressBar que todavia se encuentra en proceso
-            Response.Loading ->{
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize()
-                ){
-                    CircularProgressIndicator()
-                }
-            }
-           //cuando es una clase sellada utilizamos is
-            is Response.Success->{
-
-                //efectos secundarios
-                LaunchedEffect(Unit){
-                    viewModel.createUser()
-                    navController.popBackStack(AppScreen.Login.route, true)
-                    //cuando la respuesta es exitosa nos envie a la siguiente pantalla
-                    navController.navigate(route = AppScreen.Profile.route)
-                }
-            }
-
-            is Response.Failure->{
-                Log.d("mario","error al momento de loguearse")
-                Toast.makeText(
-                    LocalContext.current, it.exception?.message ?: "Hubo en error en la contraseña",
-                    Toast.LENGTH_LONG).show()
-
-            }
-        }
-    }
 }
 
 
