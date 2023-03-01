@@ -61,13 +61,13 @@ fun ProfileContent(navController: NavController, viewModel: ProfileViewModel = h
        }
 
         Spacer(modifier = Modifier.height(10.dp))
-        Text("Nombre del usuario",
+        Text(viewModel.userData.username,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Italic
         )
 
-        Text("Email del usuario",
+        Text(viewModel.userData.email,
             fontSize = 15.sp,
             fontStyle = FontStyle.Italic
         )
