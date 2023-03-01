@@ -1,5 +1,6 @@
 package com.mario.gamermvvmapp.presentation.screens.profile
 
+import android.provider.ContactsContract
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -8,6 +9,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.mario.gamermvvmapp.presentation.components.DefaultButton
 import com.mario.gamermvvmapp.presentation.navigation.AppScreen
+import com.mario.gamermvvmapp.presentation.screens.profile.component.ProfileContent
 
 @Composable
 fun ProfileScreen (navController: NavHostController, viewModel: ProfileViewModel= hiltViewModel()){
@@ -16,15 +18,7 @@ fun ProfileScreen (navController: NavHostController, viewModel: ProfileViewModel
 
         topBar = {},
         content = {
-            DefaultButton(
-                text = "Cerrar session",
-                onClick = {
-                    viewModel.logout()
-                    navController.navigate(route = AppScreen.Login.route){
-                        popUpTo(AppScreen.Profile.route){ inclusive=true }
-                    }
-                }
-            )
+           ProfileContent(navController)
         },
 
 

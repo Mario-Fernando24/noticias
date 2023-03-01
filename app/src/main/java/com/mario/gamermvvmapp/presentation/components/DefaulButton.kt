@@ -23,15 +23,15 @@ fun DefaultButton(
     onClick: () -> Unit,
     color: Color = red500,
     icon: ImageVector = Icons.Default.ArrowForward,
-    enable:Boolean = true
+    enable:Boolean = true,
+    modifier : Modifier =Modifier.fillMaxWidth().padding(vertical = 10.dp),
    // errorMsg: String
 ){
 
     Column() {
 
         Button(
-            modifier = Modifier.
-            fillMaxWidth().padding(vertical = 10.dp),
+            modifier = modifier,
             onClick = { onClick() },
             colors = ButtonDefaults.buttonColors(backgroundColor = color),
             enabled = enable
