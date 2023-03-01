@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.mario.gamermvvmapp.domain.model.Response
 import com.mario.gamermvvmapp.domain.model.User
 import com.mario.gamermvvmapp.domain.use_cases.auth.AuthUseCases
+import com.mario.gamermvvmapp.domain.use_cases.users.UsersUseCase
 import com.mario.gamermvvmapp.presentation.ui.utils.isLettersOrDigits
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCases): ViewModel() {
+class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCases, val  usersUseCase: UsersUseCase): ViewModel() {
 
     var userName: MutableState<String> = mutableStateOf("")
     var isUserNameValid: MutableState<Boolean> = mutableStateOf(false)
@@ -41,13 +42,13 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
     private val _registerFlow = MutableStateFlow<Response<FirebaseUser>?>(null)
     val registerFlow: StateFlow<Response<FirebaseUser>?> =_registerFlow
 
+    var user = User()
 
     fun onRegister(){
-        val user = User(
-            username = userName.value,
-            email = email.value,
-            password = password.value
-        )
+        user.username=userName.value
+        user.email=email.value
+        user.password=password.value
+
 
         register(user)
     }
@@ -58,8 +59,11 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
         val resul= authUseCases.register(user)
         //resultado que nos devolvio esa peticion
         _registerFlow.value = resul
+    }
 
-
+    fun createUser() = viewModelScope.launch{
+         user.id= authUseCases.getCurrentUserg()!!.uid
+         usersUseCase.create(user)
     }
 
     fun validateUserName(){

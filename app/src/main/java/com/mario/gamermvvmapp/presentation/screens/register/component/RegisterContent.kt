@@ -178,8 +178,10 @@ fun RegisterContent (navController: NavController, viewModel: RegisterViewModel 
             }
            //cuando es una clase sellada utilizamos is
             is Response.Success->{
+
                 //efectos secundarios
                 LaunchedEffect(Unit){
+                    viewModel.createUser()
                     navController.popBackStack(AppScreen.Login.route, true)
                     //cuando la respuesta es exitosa nos envie a la siguiente pantalla
                     navController.navigate(route = AppScreen.Profile.route)

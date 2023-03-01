@@ -39,7 +39,7 @@ fun ProfileContent(navController: NavController, viewModel: ProfileViewModel = h
        Box (){
 
            Image(
-               modifier = Modifier.fillMaxWidth().height(200.dp),
+               modifier = Modifier.fillMaxWidth().height(220.dp),
                painter = painterResource(id = R.drawable.background),
                contentDescription =  "",
                contentScale = ContentScale.Crop,
@@ -50,9 +50,8 @@ fun ProfileContent(navController: NavController, viewModel: ProfileViewModel = h
                modifier = Modifier.fillMaxWidth(),
                horizontalAlignment = Alignment.CenterHorizontally
                    ){
-
-               Spacer(modifier = Modifier.height(30.dp))
-               Text("Bienvenido", fontSize = 30.sp, fontWeight = FontWeight.Bold)
+               Spacer(modifier = Modifier.height(80.dp))
+               Text("Bienvenido", fontSize = 40.sp, fontWeight = FontWeight.Bold)
                Spacer(modifier = Modifier.height(30.dp))
                Image(
                    modifier = Modifier.size(115.dp),

@@ -68,8 +68,11 @@ dependencies {
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0-rc01"
     kapt("com.google.dagger:hilt-android-compiler:2.44")
 
-    //para borrar nttdata
+    //firebase auth autentificación
     implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
+    //Firebase storage
+    implementation platform('com.google.firebase:firebase-bom:31.2.0')
+    implementation 'com.google.firebase:firebase-firestore-ktx'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
