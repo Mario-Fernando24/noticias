@@ -18,14 +18,14 @@ import javax.inject.Inject
 //tengo acceso a todos los metodos por medio del constructor private val authUseCases: AuthUseCases)
 class LoginViewModel @Inject constructor(private val authUseCases: AuthUseCases): ViewModel() {
 
-    var email: MutableState<String> = mutableStateOf("")
-    var isEmailValid:MutableState<Boolean> = mutableStateOf(false)
-    var EmailErrorMsg:MutableState<String> = mutableStateOf("")
+    var email:String by  mutableStateOf("")
+    var isEmailValid:Boolean by  mutableStateOf(false)
+    var EmailErrorMsg:String by  mutableStateOf("")
 
 
-    var password: MutableState<String> = mutableStateOf("")
-    var isPasswordValid:MutableState<Boolean> = mutableStateOf(false)
-    var PasswordErrorMsg:MutableState<String> = mutableStateOf("")
+    var password:String by  mutableStateOf("")
+    var isPasswordValid:Boolean by  mutableStateOf(false)
+    var PasswordErrorMsg:String by  mutableStateOf("")
 
     var isEnableLoginButton = false
 
@@ -38,25 +38,25 @@ class LoginViewModel @Inject constructor(private val authUseCases: AuthUseCases)
        //preguntar si el currentUserr "usuario" llega vacio
         //session iniciada
         if(currenUserr!=null){
-            _loginFlow.value =Response.Success(currenUserr)
+            _loginFlow.value = Response.Success(currenUserr)
         }
     }
 
     //cuando es una funcion con currutina utilizamos
     fun login() = viewModelScope.launch {
         _loginFlow.value= Response.Loading
-        val resul= authUseCases.login(email.value, password.value)
+        val resul= authUseCases.login(email, password)
         _loginFlow.value= resul
     }
     fun validateEmail(){
 
         //SABER SI ES UN EMAIL VALIDO
-        if(Patterns.EMAIL_ADDRESS.matcher(email.value).matches()){
-            isEmailValid.value=true
-            EmailErrorMsg.value=""
+        if(Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            isEmailValid=true
+            EmailErrorMsg=""
         }else{
-            isEmailValid.value=false
-            EmailErrorMsg.value="El email no es valido"
+            isEmailValid=false
+            EmailErrorMsg="El email no es valido"
         }
         enableLoginButton()
     }
@@ -65,20 +65,18 @@ class LoginViewModel @Inject constructor(private val authUseCases: AuthUseCases)
     fun validatePassword(){
 
         //SABER SI ES UN EMAIL VALIDO
-        if(password.value.length>=8){
-            isPasswordValid.value=true
-            PasswordErrorMsg.value=""
+        if(password.length>=8){
+            isPasswordValid=true
+            PasswordErrorMsg=""
         }else{
-            isPasswordValid.value=false
-            PasswordErrorMsg.value="Almenos 8 caracteres"
+            isPasswordValid=false
+            PasswordErrorMsg="Almenos 8 caracteres"
         }
         enableLoginButton()
     }
 
     fun enableLoginButton(){
-        isEnableLoginButton = isEmailValid.value && isPasswordValid.value
+        isEnableLoginButton = isEmailValid && isPasswordValid
     }
-
-
 
     }

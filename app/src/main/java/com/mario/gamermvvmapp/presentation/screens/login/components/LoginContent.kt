@@ -95,12 +95,12 @@ fun LoginContent(navController: NavController, viewModel: LoginViewModel= hiltVi
 
                 DefauldTextField(
                     modifier = Modifier.padding(top = 25.dp),
-                    value = viewModel.email.value,
-                    onValueChange = {  viewModel.email.value = it},
+                    value = viewModel.email,
+                    onValueChange = {  viewModel.email = it},
                     label = "Correo electronico",
                     icon = Icons.Default.Email,
                     keyboardType = KeyboardType.Email,
-                    errorMsg =viewModel.EmailErrorMsg.value,
+                    errorMsg =viewModel.EmailErrorMsg,
                     validateField = {
                         viewModel.validateEmail()
                     }
@@ -109,12 +109,12 @@ fun LoginContent(navController: NavController, viewModel: LoginViewModel= hiltVi
 
                 DefauldTextField(
                     modifier = Modifier.padding(top = 5.dp),
-                    value = viewModel.password.value,
-                    onValueChange = { viewModel.password.value = it },
+                    value = viewModel.password,
+                    onValueChange = { viewModel.password = it },
                     label = "Contraseña",
                     icon = Icons.Default.Lock,
                     hideText = true,
-                    errorMsg = viewModel.PasswordErrorMsg.value,
+                    errorMsg = viewModel.PasswordErrorMsg,
                     validateField = {
                         viewModel.validatePassword()
                     }
