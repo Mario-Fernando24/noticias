@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.mario.gamermvvmapp.presentation.screens.login.LoginScreen
 import com.mario.gamermvvmapp.presentation.screens.profile.ProfileScreen
+import com.mario.gamermvvmapp.presentation.screens.profile_edit.ProfileEditScreen
 import com.mario.gamermvvmapp.presentation.screens.register.RegisterScreen
 
 @Composable
@@ -25,6 +26,9 @@ fun AppNavigation(navController:  NavHostController) {
        }
        composable(route= AppScreen.Profile.route){
            ProfileScreen(navController)
+       }
+       composable(route= AppScreen.ProfileEdit.route){
+           ProfileEditScreen(navController)
        }
    }
 

@@ -10,6 +10,7 @@ import androidx.navigation.NavHostController
 import com.mario.gamermvvmapp.presentation.components.DefaultButton
 import com.mario.gamermvvmapp.presentation.navigation.AppScreen
 import com.mario.gamermvvmapp.presentation.screens.profile.component.ProfileContent
+import com.mario.gamermvvmapp.presentation.screens.profile_edit.component.ProfileEditContent
 
 @Composable
 fun ProfileScreen (navController: NavHostController, viewModel: ProfileViewModel= hiltViewModel()){
@@ -18,7 +19,7 @@ fun ProfileScreen (navController: NavHostController, viewModel: ProfileViewModel
 
         topBar = {},
         content = {
-           ProfileContent(navController)
+            ProfileContent(navController)
         },
 
 
