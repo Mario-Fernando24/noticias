@@ -1,5 +1,6 @@
 package com.mario.gamermvvmapp.presentation.screens.profile_edit
 
+import android.util.Log
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -7,7 +8,7 @@ import com.mario.gamermvvmapp.presentation.components.DefaultTolbar
 import com.mario.gamermvvmapp.presentation.screens.profile_edit.component.ProfileEditContent
 
 @Composable
-fun ProfileEditScreen(navController: NavHostController){
+fun ProfileEditScreen(navController: NavHostController, user:String){
 
     Scaffold (
         topBar = {
