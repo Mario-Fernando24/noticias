@@ -1,5 +1,6 @@
 package com.mario.gamermvvmapp.data.repository
 
+import android.util.Log
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -30,6 +31,26 @@ class UsersRepositoryImp @Inject constructor(private val userRef: CollectionRefe
             e.printStackTrace()
             Response.Failure(e)
         }
+    }
+
+    override suspend fun updateUser(user: User): Response<Boolean> {
+
+        return try {
+
+            val map:MutableMap<String, Any> = HashMap()
+            map["username"] = user.username
+            map["image"] = user.image
+
+            Log.d("juan","juan${user.username}")
+
+            userRef.document(user.id).update(map).await()
+            Response.Success(true)
+
+        }catch (e: Exception){
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+
     }
 
     override fun getUsersById(id: String): Flow<User> = callbackFlow {

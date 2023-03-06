@@ -105,7 +105,7 @@ fun ProfileEditContent (navController: NavController, viewModel: ProfileEditView
                     icon = Icons.Default.Edit,
                     text = "ACTUALIZAR DATOS",
                     onClick ={
-                       // viewModel.onRegister()
+                        viewModel.onUpdate()
                     },
                  //   enable =  viewModel.isEnableRegisterButton
                 )

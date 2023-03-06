@@ -9,6 +9,6 @@ interface UsersRepository {
 
     //para crear un usuario le enviamos el modelo y nos retorno una variable de tipo booleana
    suspend fun create(user: User):Response<Boolean>
-  
+   suspend fun updateUser(user: User): Response<Boolean>
    fun getUsersById(id: String): Flow<User>
 }

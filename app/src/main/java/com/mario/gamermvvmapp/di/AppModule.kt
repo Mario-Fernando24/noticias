@@ -13,6 +13,7 @@ import com.mario.gamermvvmapp.domain.repository.UsersRepository
 import com.mario.gamermvvmapp.domain.use_cases.auth.*
 import com.mario.gamermvvmapp.domain.use_cases.users.Create
 import com.mario.gamermvvmapp.domain.use_cases.users.GetUserById
+import com.mario.gamermvvmapp.domain.use_cases.users.Update
 import com.mario.gamermvvmapp.domain.use_cases.users.UsersUseCase
 import dagger.Module
 import dagger.Provides
@@ -51,6 +52,7 @@ object AppModule {
     @Provides
     fun providerUsesUseCase(repository: UsersRepository) = UsersUseCase(
         create = Create(repository),
-        getUserById = GetUserById(repository)
-    )
+        getUserById = GetUserById(repository),
+        update = Update(repository),
+        )
 }
