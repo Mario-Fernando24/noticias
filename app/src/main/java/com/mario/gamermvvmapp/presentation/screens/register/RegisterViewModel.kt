@@ -49,7 +49,7 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
         user.username=userName
         user.email=email
         user.password=password
-
+        user.city=""
 
         register(user)
     }

@@ -4,11 +4,12 @@ import com.google.gson.Gson
 
 //recibir los datos del usuario
 data class User (
-    var id:String = "",
+   var id:String = "",
     var username:String = "",
     var email:String = "",
     var password: String = "",
-    var image: String = ""
+    var image: String = "",
+    var city: String = ""
 ){
     fun toJson(): String = Gson().toJson(this)
     companion object{

@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            //relaciona con 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
+            //relaciona con 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
             GamerMvvmAppTheme (darkTheme = true){
                 // A surface container using the 'background' color from the theme
                 Surface(

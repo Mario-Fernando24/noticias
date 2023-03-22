@@ -40,8 +40,8 @@ class UsersRepositoryImp @Inject constructor(private val userRef: CollectionRefe
             val map:MutableMap<String, Any> = HashMap()
             map["username"] = user.username
             map["image"] = user.image
-
-            Log.d("juan","juan${user.username}")
+            map["city"] = user.city
+           Log.d("juan","juan${user.username}")
 
             userRef.document(user.id).update(map).await()
             Response.Success(true)
