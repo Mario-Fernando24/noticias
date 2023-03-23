@@ -9,13 +9,14 @@ import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -28,36 +29,26 @@ import coil.compose.AsyncImage
 import com.mario.gamermvvmapp.R
 import com.mario.gamermvvmapp.presentation.components.DefauldTextField
 import com.mario.gamermvvmapp.presentation.components.DefaultButton
+import com.mario.gamermvvmapp.presentation.components.DialogCapturePinture
 import com.mario.gamermvvmapp.presentation.screens.profile_edit.ProfileEditViewModel
-import com.mario.gamermvvmapp.presentation.screens.register.RegisterViewModel
 import com.mario.gamermvvmapp.presentation.ui.theme.Darkgray700
 import com.mario.gamermvvmapp.presentation.ui.theme.red500
-import com.mario.gamermvvmapp.presentation.utils.ComposeFileProvider
 
 @Composable
 fun ProfileEditContent (navController: NavController, viewModel: ProfileEditViewModel = hiltViewModel()){
 
-    //agregar imagen de la galeria del dispositivo
-    val imagePicker = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent(),
-        // nos devuelve una url
-        onResult = {url->
-            if(url!=null){
-                viewModel.onGalleryResult(url)
-            }
-        })
-
-
-    val cameraLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.TakePicture(),
-        //nos devuelve un bool
-        onResult = {url->
-            if(url!=null){
-                viewModel.onCameraResult(url)
-            }
-        })
 
     val context = LocalContext.current
+    viewModel.resultingActivityHandler.handle()
+
+    var dialogState = remember {mutableStateOf(false)}
+
+    DialogCapturePinture(
+        status = dialogState,
+        takePhoto = { viewModel.takePhoto() },
+        pickImage = { viewModel.pickImage() }
+
+    )
 
     Box(
         modifier = Modifier .fillMaxWidth(),
@@ -76,22 +67,28 @@ fun ProfileEditContent (navController: NavController, viewModel: ProfileEditView
                     .padding(top = 15.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-             if(viewModel.hasImage && viewModel.imageUrl!=null){
+             if( viewModel.imageUri!=""){
                  //Si se selecciono una imagen 
                  AsyncImage(
-                     modifier = Modifier.height(140.dp).clip(CircleShape),
-                     model = viewModel.imageUrl,
-                     contentDescription = "Selected image")
+                     modifier = Modifier
+                         .height(150.dp)
+                         .width(150.dp)
+                         .clip(CircleShape)
+                         .clickable {
+                             dialogState.value = true
+                         },
+                     model = viewModel.imageUri,
+                     contentDescription = "Selected image",
+                     contentScale = ContentScale.Crop
+                     )
+
              }else{
 
                  Image(
                      modifier = Modifier
                          .height(140.dp)
                          .clickable {
-                          //   imagePicker.launch("image/*")
-                             val uri = ComposeFileProvider.getImageUrl(context)
-                             viewModel.imageUrl = uri
-                             cameraLauncher.launch(uri)
+                             dialogState.value = true
                          }
                          .width(310.dp),
                      painter = painterResource(id= R.drawable.user

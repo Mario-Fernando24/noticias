@@ -39,7 +39,7 @@ fun Login(navController: NavController,viewModel: LoginViewModel= hiltViewModel(
         }
 
         is Response.Failure->{
-            Toast.makeText(LocalContext.current, loginResponse.exception?.message ?: "Hubo en error en la contraseña", Toast.LENGTH_LONG).show()
+            Toast.makeText(LocalContext.current,"Hubo en error en la contraseña", Toast.LENGTH_LONG).show()
         }
     }
 }

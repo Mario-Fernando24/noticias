@@ -1,39 +1,54 @@
 package com.mario.gamermvvmapp.presentation.utils
 
 import android.content.Context
+import android.content.ContextWrapper
+import android.graphics.Bitmap
+import android.media.MediaScannerConnection
 import android.net.Uri
+import android.os.Environment
+import android.provider.MediaStore
+import android.util.Log
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.FileProvider
 import com.mario.gamermvvmapp.R
+import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
+import java.util.*
 
-//hereda de FileProvider para las imagenes que estan en la carpeta R.xml.
-class ComposeFileProvider: FileProvider(R.xml.file_paths){
+class ComposeFileProvider: FileProvider(R.xml.file_paths) {
 
-     companion object{
-         //la funcion nos devuelve una url
-         fun getImageUrl(context: Context): Uri{
-             //creamos un directorio
-             val directory = File(context.cacheDir,"images")
-             //accedemos al directorio
-             directory.mkdirs()
-             val file = File.createTempFile(
-                 "selected_image_",
-                 ".jpg",
-                 directory
-             )
-             val authority = context.packageName + ".fileprovider"
+    companion object {
+        //la funcion nos devuelve una url
+        fun getImageUri(context: Context): Uri {
 
-             return getUriForFile(
-                 context,
-                 authority,
-                 file
-             )
-         }
+            val directory = File(context.cacheDir, "images")
+            directory.mkdirs()
+            val file = File.createTempFile(
+                "selected_image_",
+                ".jpg",
+                directory
+            )
+            val authority = context.packageName + ".fileprovider"
+            return getUriForFile(
+                context,
+                authority,
+                file
+            )
+        }
+           //
+        fun getPathFromBitmap(context: Context, bitmap: Bitmap): String {
+            val wrapper = ContextWrapper(context)
+            var file = wrapper.getDir("Images", Context.MODE_PRIVATE)
+            file = File(file,"${UUID.randomUUID()}.jpg")
+            val stream: OutputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream)
+            stream.flush()
+            stream.close()
+            return file.path
+        }
 
-
-
-     }
+    }
 
 }
-
-
