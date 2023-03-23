@@ -3,6 +3,7 @@ package com.mario.gamermvvmapp.presentation.screens.profile.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -13,6 +14,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -24,11 +26,14 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.mario.gamermvvmapp.R
 import com.mario.gamermvvmapp.presentation.components.DefaultButton
 import com.mario.gamermvvmapp.presentation.navigation.AppScreen
 import com.mario.gamermvvmapp.presentation.screens.profile.ProfileViewModel
 import com.mario.gamermvvmapp.presentation.ui.theme.GamerMvvmAppTheme
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @Composable
 fun ProfileContent(navController: NavController, viewModel: ProfileViewModel = hiltViewModel()){
@@ -37,9 +42,10 @@ fun ProfileContent(navController: NavController, viewModel: ProfileViewModel = h
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally){
        Box (){
-
            Image(
-               modifier = Modifier.fillMaxWidth().height(220.dp),
+               modifier = Modifier
+                   .fillMaxWidth()
+                   .height(220.dp),
                painter = painterResource(id = R.drawable.background),
                contentDescription =  "",
                contentScale = ContentScale.Crop,
@@ -53,10 +59,21 @@ fun ProfileContent(navController: NavController, viewModel: ProfileViewModel = h
                Spacer(modifier = Modifier.height(80.dp))
                Text("Bienvenido", fontSize = 40.sp, fontWeight = FontWeight.Bold)
                Spacer(modifier = Modifier.height(30.dp))
-               Image(
-                   modifier = Modifier.size(115.dp),
-                   painter = painterResource(id = R.drawable.user),
-                   contentDescription =  "")
+
+               if(viewModel.userData.image!=""){
+                   AsyncImage(
+                       modifier = Modifier.size(115.dp)
+                           .clip(CircleShape),
+                       model = viewModel.userData.image,
+                       contentDescription = "",
+                       contentScale = ContentScale.Crop)
+               }else{
+                   Image(
+                       modifier = Modifier.size(115.dp),
+                       painter = painterResource(id = R.drawable.user),
+                       contentDescription =  "")
+               }
+
            }
        }
 
@@ -78,6 +95,7 @@ fun ProfileContent(navController: NavController, viewModel: ProfileViewModel = h
             text = "Editar datos",
             color = Color.White,
             onClick = {
+               viewModel.userData.image= URLEncoder.encode(viewModel.userData.image,StandardCharsets.UTF_8.toString())
                 navController.navigate(
                     route = AppScreen.ProfileEdit.passUser(viewModel.userData.toJson()
                     )

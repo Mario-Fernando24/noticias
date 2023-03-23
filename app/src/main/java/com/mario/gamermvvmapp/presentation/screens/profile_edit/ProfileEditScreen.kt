@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import com.mario.gamermvvmapp.presentation.components.DefaultTolbar
 import com.mario.gamermvvmapp.presentation.components.ProgressBar
 import com.mario.gamermvvmapp.presentation.screens.profile_edit.component.ProfileEditContent
+import com.mario.gamermvvmapp.presentation.screens.profile_edit.component.SaveImage
 import com.mario.gamermvvmapp.presentation.screens.profile_edit.component.UpdateProfile
 
 @Composable
@@ -27,5 +28,5 @@ fun ProfileEditScreen(navController: NavHostController, user:String){
         }
     )
      UpdateProfile(navController)
-
+    SaveImage()
 }

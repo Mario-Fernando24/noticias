@@ -79,6 +79,10 @@ dependencies {
     //Async Image
     implementation("io.coil-kt:coil-compose:2.2.2")
 
+    //FIRESTORAGE FOR SAVE IMG
+    implementation 'com.google.firebase:firebase-storage-ktx'
+
+    implementation("commons-io:commons-io:2.7")
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'

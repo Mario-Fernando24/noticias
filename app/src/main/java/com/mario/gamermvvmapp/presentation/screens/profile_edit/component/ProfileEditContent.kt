@@ -67,8 +67,7 @@ fun ProfileEditContent (navController: NavController, viewModel: ProfileEditView
                     .padding(top = 15.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-             if( viewModel.imageUri!=""){
-                 //Si se selecciono una imagen 
+             if( viewModel.userImageShow!=""){ //Si se selecciono una imagen
                  AsyncImage(
                      modifier = Modifier
                          .height(150.dp)
@@ -77,7 +76,7 @@ fun ProfileEditContent (navController: NavController, viewModel: ProfileEditView
                          .clickable {
                              dialogState.value = true
                          },
-                     model = viewModel.imageUri,
+                     model = viewModel.userImageShow,
                      contentDescription = "Selected image",
                      contentScale = ContentScale.Crop
                      )
@@ -161,7 +160,7 @@ fun ProfileEditContent (navController: NavController, viewModel: ProfileEditView
                     icon = Icons.Default.Edit,
                     text = "ACTUALIZAR DATOS",
                     onClick ={
-                        viewModel.onUpdate()
+                        viewModel.saveImage()
                     },
                  //   enable =  viewModel.isEnableRegisterButton
                 )
