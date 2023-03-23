@@ -59,7 +59,7 @@ class ProfileEditViewModel  @Inject constructor(
         userName=userr.username
     }
 
-    // METODO PARA TOMAR FOTO DE LA GALERIA DEL DISPOSITIVO
+    // METODO PARA TOMAR FOTO DE LA GALERIA DEL DISPOSITIVOooo
     fun pickImage()= viewModelScope.launch {
         val result = resultingActivityHandler.getContent("image/*")
         if (result!=null) {
