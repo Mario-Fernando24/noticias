@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import com.mario.gamermvvmapp.domain.model.Response
 import com.mario.gamermvvmapp.presentation.components.ProgressBar
 import com.mario.gamermvvmapp.presentation.navigation.AuthScreen
+import com.mario.gamermvvmapp.presentation.navigation.Graph
 import com.mario.gamermvvmapp.presentation.screens.register.RegisterViewModel
 
 
@@ -27,9 +28,9 @@ fun Register(navController: NavController, viewModel: RegisterViewModel = hiltVi
             //efectos secundarios
             LaunchedEffect(Unit){
                 viewModel.createUser()
-                navController.popBackStack(AuthScreen.Login.route, true)
-                //cuando la respuesta es exitosa nos envie a la siguiente pantalla
-                navController.navigate(route = AuthScreen.Profile.route)
+                navController.popBackStack(Graph.AUTHENTICATION, true)
+                //cuando la respuesta es exitosa nos enviea la siguiente pantalla
+                navController.navigate(route = Graph.HOME)
             }
         }
 

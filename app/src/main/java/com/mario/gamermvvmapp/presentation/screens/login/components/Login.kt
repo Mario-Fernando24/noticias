@@ -10,7 +10,6 @@ import com.mario.gamermvvmapp.domain.model.Response
 import com.mario.gamermvvmapp.presentation.components.ProgressBar
 import com.mario.gamermvvmapp.presentation.navigation.AuthScreen
 import com.mario.gamermvvmapp.presentation.navigation.Graph
-import com.mario.gamermvvmapp.presentation.navigation.RootScreen
 import com.mario.gamermvvmapp.presentation.screens.login.LoginViewModel
 
 
@@ -27,11 +26,12 @@ fun Login(navController: NavController,viewModel: LoginViewModel= hiltViewModel(
             //efectos secundarios
             LaunchedEffect(Unit){
 
-                //cuando la respuesta es exitosa nos envie a la siguiente pantalla
-                navController.navigate(route = Graph.HOME){
+                    //cuando la respuesta es exitosa nos envie a la siguiente pantalla
+                   navController.navigate(route = Graph.HOME){
                     //eliminamos el grafo anterior
                     popUpTo(Graph.AUTHENTICATION ){  inclusive=true  }
-                }
+
+                    }
             }
         }
 

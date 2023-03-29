@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Gamer Mvvm App</string>
+    <string name="app_name">CRUD MVVM</string>
 
-    "Correo electronico"
+
     <string name="email_login">Correo electronico</string>
     <string name="password_login">Por favor inicie sesión de nuevo</string>
 

@@ -1,5 +1,7 @@
 package com.mario.gamermvvmapp.presentation.screens.profile.component
 
+import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -14,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -25,8 +28,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.mario.gamermvvmapp.R
+import com.mario.gamermvvmapp.presentation.MainActivity
 import com.mario.gamermvvmapp.presentation.components.DefaultButton
 import com.mario.gamermvvmapp.presentation.navigation.AuthScreen
+import com.mario.gamermvvmapp.presentation.navigation.DetailsScreen
+import com.mario.gamermvvmapp.presentation.navigation.Graph
 import com.mario.gamermvvmapp.presentation.screens.profile.ProfileViewModel
 import com.mario.gamermvvmapp.presentation.ui.theme.GamerMvvmAppTheme
 import java.net.URLEncoder
@@ -34,6 +40,8 @@ import java.nio.charset.StandardCharsets
 
 @Composable
 fun ProfileContent(navController: NavController, viewModel: ProfileViewModel = hiltViewModel()){
+    val activity = LocalContext.current as? Activity
+
 
     Column (
         modifier = Modifier.fillMaxSize(),
@@ -94,7 +102,8 @@ fun ProfileContent(navController: NavController, viewModel: ProfileViewModel = h
             onClick = {
                viewModel.userData.image= URLEncoder.encode(viewModel.userData.image,StandardCharsets.UTF_8.toString())
                 navController.navigate(
-                    route = AuthScreen.ProfileEdit.passUser(viewModel.userData.toJson()
+                    route = DetailsScreen.ProfileEdit.passUser(viewModel.userData.toJson()
+
                     )
                 )
             }
@@ -108,9 +117,8 @@ fun ProfileContent(navController: NavController, viewModel: ProfileViewModel = h
             color = Color.Red,
             onClick = {
                 viewModel.logout()
-                 navController.navigate(route = AuthScreen.Login.route){
-                    popUpTo(AuthScreen.Profile.route){ inclusive=true }
-                }
+                activity?.finish()
+                activity?.startActivity(Intent(activity, MainActivity::class.java))
             }
         )
     }

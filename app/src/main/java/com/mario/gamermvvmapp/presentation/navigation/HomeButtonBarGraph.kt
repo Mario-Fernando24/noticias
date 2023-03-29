@@ -27,13 +27,15 @@ fun HomeButtonBarGraph(navController: NavHostController){
        }
 
 
-      composable(route= HomeButtonBarScreen.Profile.route){
+      composable(route= HomeButtonBarScreen.MyPosts.route){
            MyPostScreen(navController)
        }
 
-       composable(route= HomeButtonBarScreen.Profile.route){
+       composable(route= HomeButtonBarScreen.Profile.route) {
            ProfileScreen(navController)
        }
+
+       detailsNavGraph(navController)
    }
 }
 
@@ -53,7 +55,7 @@ sealed class HomeButtonBarScreen(
         icon = Icons.Default.List
     )
     object MyPosts: HomeButtonBarScreen(
-        route = "my_posts",
+        route = "my_post",
         title = "Mis post",
         icon = Icons.Outlined.List
     )

@@ -3,10 +3,7 @@ package com.mario.gamermvvmapp.data.repository
 import android.net.Uri
 import android.util.Log
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.ktx.Firebase
+
 import com.google.firebase.storage.StorageReference
 import com.mario.gamermvvmapp.domain.model.Response
 import com.mario.gamermvvmapp.domain.model.User
@@ -63,8 +60,10 @@ class UsersRepositoryImp @Inject constructor(
 
         val snapshotListener = userRef.document(id).addSnapshotListener{snapshot,e->
 
-            val user= snapshot!!.toObject(User::class.java) ?:  User()
-           //emite la información cuando sea requerida
+
+            val user = snapshot?.toObject(User::class.java) ?: User()
+            //emite la información cuando sea requerida
+
             trySend(user)
         }
 
