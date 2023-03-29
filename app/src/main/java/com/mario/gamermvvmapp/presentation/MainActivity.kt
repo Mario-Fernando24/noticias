@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.mario.gamermvvmapp.presentation.navigation.AppNavigation
+import com.mario.gamermvvmapp.presentation.navigation.RootNavGraph
 import com.mario.gamermvvmapp.presentation.ui.theme.GamerMvvmAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             //relaciona con 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
-            GamerMvvmAppTheme (darkTheme = true){
+            GamerMvvmAppTheme(darkTheme = true) {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -32,8 +32,9 @@ class MainActivity : ComponentActivity() {
                 ) {
                     //pantalla principal
                     navController = rememberNavController()
-                    AppNavigation(navController= navController)
-                  //  LoginScreen()
+                    RootNavGraph(navController = navController)
+                    //  LoginScreen)
+
                 }
             }
         }

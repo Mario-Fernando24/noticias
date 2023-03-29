@@ -2,13 +2,10 @@ package com.mario.gamermvvmapp.presentation.screens.profile.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
@@ -29,7 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.mario.gamermvvmapp.R
 import com.mario.gamermvvmapp.presentation.components.DefaultButton
-import com.mario.gamermvvmapp.presentation.navigation.AppScreen
+import com.mario.gamermvvmapp.presentation.navigation.AuthScreen
 import com.mario.gamermvvmapp.presentation.screens.profile.ProfileViewModel
 import com.mario.gamermvvmapp.presentation.ui.theme.GamerMvvmAppTheme
 import java.net.URLEncoder
@@ -97,7 +94,7 @@ fun ProfileContent(navController: NavController, viewModel: ProfileViewModel = h
             onClick = {
                viewModel.userData.image= URLEncoder.encode(viewModel.userData.image,StandardCharsets.UTF_8.toString())
                 navController.navigate(
-                    route = AppScreen.ProfileEdit.passUser(viewModel.userData.toJson()
+                    route = AuthScreen.ProfileEdit.passUser(viewModel.userData.toJson()
                     )
                 )
             }
@@ -111,8 +108,8 @@ fun ProfileContent(navController: NavController, viewModel: ProfileViewModel = h
             color = Color.Red,
             onClick = {
                 viewModel.logout()
-                 navController.navigate(route = AppScreen.Login.route){
-                    popUpTo(AppScreen.Profile.route){ inclusive=true }
+                 navController.navigate(route = AuthScreen.Login.route){
+                    popUpTo(AuthScreen.Profile.route){ inclusive=true }
                 }
             }
         )

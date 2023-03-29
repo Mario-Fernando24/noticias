@@ -10,10 +10,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.mario.gamermvvmapp.presentation.navigation.AppScreen
+import com.mario.gamermvvmapp.presentation.navigation.AuthScreen
 import com.mario.gamermvvmapp.presentation.ui.theme.red500
 
 @Composable
@@ -30,7 +29,7 @@ fun LoginBottonBar (navController: NavHostController){
         Spacer(modifier = Modifier.width(10.dp))
         Text(
             modifier = Modifier.clickable {
-                navController.navigate(route = AppScreen.Register.route)
+                navController.navigate(route = AuthScreen.Register.route)
             },
             text = "REGISTRATE AQUI",
             color = red500,

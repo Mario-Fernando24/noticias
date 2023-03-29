@@ -1,35 +1,33 @@
 package com.mario.gamermvvmapp.presentation.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.mario.gamermvvmapp.presentation.screens.login.LoginScreen
-import com.mario.gamermvvmapp.presentation.screens.profile.ProfileScreen
+import com.mario.gamermvvmapp.presentation.screens.home.HomeScreen
 import com.mario.gamermvvmapp.presentation.screens.profile_edit.ProfileEditScreen
-import com.mario.gamermvvmapp.presentation.screens.register.RegisterScreen
 
 @Composable
-fun AppNavigation(navController:  NavHostController) {
+fun RootNavGraph(navController:  NavHostController) {
 
    NavHost(
        navController = navController,
+       route=Graph.ROOT,
        //esta es la primera pantalla que se mostrara al correr la app por primera vez
-       startDestination = AppScreen.Login.route
+       startDestination = Graph.AUTHENTICATION
    ){
-       composable( route =  AppScreen.Login.route){
-                     LoginScreen(navController)
+       authNavGraph(navController = navController)
+
+       composable(route = Graph.HOME){
+           HomeScreen()
        }
-       composable(route= AppScreen.Register.route){
-               RegisterScreen(navController)
-       }
-       composable(route= AppScreen.Profile.route){
-           ProfileScreen(navController)
-       }
-       composable(route= AppScreen.ProfileEdit.route,
+
+    // composable(route= AuthScreen.Profile.route){
+      //     ProfileScreen(navController)
+      // }
+       composable(route= AuthScreen.ProfileEdit.route,
            arguments = listOf(navArgument("user")
           {
             type = NavType.StringType
@@ -42,4 +40,8 @@ fun AppNavigation(navController:  NavHostController) {
        }
    }
 
+}
+
+sealed class RootScreen(val route: String) {
+    object Home : RootScreen("home")
 }
