@@ -70,6 +70,9 @@ class ProfileEditViewModel  @Inject constructor(
             saveImageResponse = Response.Loading
             val result = usersUseCase.saveImage(file!!)
             saveImageResponse = result
+        }else{
+            onUpdate(userImageShow)
+            Log.d("MARIO","MARIO FERNANDO")
         }
     }
 
@@ -91,10 +94,12 @@ class ProfileEditViewModel  @Inject constructor(
           if (resul!=null) {
               userImageShow = ComposeFileProvider.getPathFromBitmap(context, resul)
               file = File(userImageShow)
-          }
+              }
      }
 
     fun onUpdate(url:String){
+
+
 
         val use=User(
             id = userr.id,

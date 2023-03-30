@@ -1,5 +1,6 @@
 package com.mario.gamermvvmapp.presentation.screens.profile_edit.component
 
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.*
@@ -160,9 +161,14 @@ fun ProfileEditContent (navController: NavController, viewModel: ProfileEditView
                     icon = Icons.Default.Edit,
                     text = "ACTUALIZAR DATOS",
                     onClick ={
-                        viewModel.saveImage()
+                        // if(viewModel.userImageShow!=null){
+                        //   viewModel.onUpdate(viewModel.userImageShow)
+                        //}else{
+                        Log.d("MARIOF",""+viewModel.userImageShow)
+                          viewModel.saveImage()
+
+                        //}
                     },
-                 //   enable =  viewModel.isEnableRegisterButton
                 )
 
             }
