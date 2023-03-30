@@ -12,12 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.mario.gamermvvmapp.presentation.components.DefaultTolbar
 import com.mario.gamermvvmapp.presentation.navigation.DetailsScreen
 
 @Composable
 fun MyPostScreen(navController: NavHostController){
 
     Scaffold(
+
         content = {
             Text(text = "My Post screen")
         },
