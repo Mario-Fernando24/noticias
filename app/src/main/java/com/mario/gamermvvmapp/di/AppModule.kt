@@ -7,11 +7,12 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.mario.gamermvvmapp.core.Constant.POSTS_COLECTION
 import com.mario.gamermvvmapp.core.Constant.USERS_COLECTION
 import com.mario.gamermvvmapp.data.repository.AuthRepositoryImp
 import com.mario.gamermvvmapp.data.repository.UsersRepositoryImp
-import com.mario.gamermvvmapp.domain.repository.AuthRepository
-import com.mario.gamermvvmapp.domain.repository.UsersRepository
+import com.mario.gamermvvmapp.di.repository.AuthRepository
+import com.mario.gamermvvmapp.di.repository.UsersRepository
 import com.mario.gamermvvmapp.domain.use_cases.auth.*
 import com.mario.gamermvvmapp.domain.use_cases.users.*
 import dagger.Module
@@ -34,11 +35,34 @@ object AppModule {
     @Provides
     fun provideFirebaseStorage(): FirebaseStorage = FirebaseStorage.getInstance()
    //referenciamos la carpeta donde se van a guardar las imagenes
+
+    //==========================================================================================
+    //               COLECCION USERS AGREGAR IMAGEN AND COLECTION
+    //==========================================================================================
     @Provides
     fun provideStorageUsersRef(storage: FirebaseStorage): StorageReference= storage.reference.child(USERS_COLECTION)
 
     @Provides
     fun provideUserRef(db: FirebaseFirestore): CollectionReference = db.collection(USERS_COLECTION)
+
+    //==========================================================================================
+    //                                  END
+    //==========================================================================================
+
+
+    //==========================================================================================
+    //               COLECCION POST AGREGAR IMAGEN AND COLECTION
+    //==========================================================================================
+    @Provides
+    fun provideStoragePostsRef(storage: FirebaseStorage): StorageReference= storage.reference.child(POSTS_COLECTION)
+
+    @Provides
+    fun providePostsRef(db: FirebaseFirestore): CollectionReference = db.collection(POSTS_COLECTION)
+    //==========================================================================================
+    //                        END
+    //==========================================================================================
+
+
     //siempre se empieza por provider de proveer
     @Provides
     fun providerFirebaseAuth(): FirebaseAuth =FirebaseAuth.getInstance()

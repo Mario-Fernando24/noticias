@@ -3,9 +3,10 @@ package com.mario.gamermvvmapp.presentation.navigation
 import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.mario.gamermvvmapp.presentation.screens.new_post.NewPostScreen
+import com.mario.gamermvvmapp.presentation.screens.new_post.NewPostViewModel
 import com.mario.gamermvvmapp.presentation.screens.profile_edit.ProfileEditScreen
 
-fun NavGraphBuilder.detailsNavGraph(navHostController: NavHostController ){
+fun NavGraphBuilder.detailsNavGraph(navController: NavHostController){
 
   navigation(
       route = Graph.DETAILS,
@@ -15,7 +16,8 @@ fun NavGraphBuilder.detailsNavGraph(navHostController: NavHostController ){
       //creando un nuevo post
       composable(route = DetailsScreen.NewPost.route){
           //la pantalla que abre esta ruta sera
-          NewPostScreen(navController = navHostController)
+         // NewPostScreen(navController = navHostController)
+          NewPostScreen(navController = navController)
       }
 
       composable(route= DetailsScreen.ProfileEdit.route,
@@ -26,7 +28,7 @@ fun NavGraphBuilder.detailsNavGraph(navHostController: NavHostController ){
       ){
           it.arguments?.getString("user")?.let { data->
              // ProfileEditScreen(navController, user = data)
-              ProfileEditScreen(navController = navHostController, user =data)
+              ProfileEditScreen(navController = navController, user =data)
           }
 
       }

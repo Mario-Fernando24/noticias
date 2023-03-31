@@ -6,6 +6,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.mario.gamermvvmapp.presentation.components.DefaultButton
@@ -13,7 +14,7 @@ import com.mario.gamermvvmapp.presentation.components.DefaultTolbar
 import com.mario.gamermvvmapp.presentation.screens.new_post.components.NewPostContent
 
 @Composable
-fun NewPostScreen(navController: NavHostController){
+fun NewPostScreen(navController: NavHostController, viewModel: NewPostViewModel = hiltViewModel()){
 
     Scaffold(
         topBar = {
@@ -29,7 +30,9 @@ fun NewPostScreen(navController: NavHostController){
             DefaultButton(
                 modifier = Modifier.fillMaxWidth().padding(start = 24.dp, end = 24.dp, bottom = 20.dp),
                 text = "Publicar",
-                onClick = { /*TODO*/ })
+                onClick = {
+                    viewModel.onNewPost()
+                })
         }
     )
 

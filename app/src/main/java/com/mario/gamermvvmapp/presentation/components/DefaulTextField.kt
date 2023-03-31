@@ -59,11 +59,10 @@ fun DefauldTextField(
         )
 
         Text(
-            modifier = Modifier.padding(top = 5.dp),
+            modifier = Modifier.padding(top = 5.dp, start = 20.dp),
             text = errorMsg,
             fontSize = 11.sp,
             color = Color.Red
-
         )
 
 

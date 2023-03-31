@@ -1,4 +1,4 @@
-package com.mario.gamermvvmapp.domain.repository
+package com.mario.gamermvvmapp.di.repository
 
 import com.mario.gamermvvmapp.domain.model.Response
 import com.mario.gamermvvmapp.domain.model.User

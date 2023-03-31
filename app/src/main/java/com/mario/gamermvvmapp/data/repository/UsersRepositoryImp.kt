@@ -7,7 +7,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.storage.StorageReference
 import com.mario.gamermvvmapp.domain.model.Response
 import com.mario.gamermvvmapp.domain.model.User
-import com.mario.gamermvvmapp.domain.repository.UsersRepository
+import com.mario.gamermvvmapp.di.repository.UsersRepository
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow

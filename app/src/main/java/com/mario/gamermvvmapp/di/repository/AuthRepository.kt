@@ -1,4 +1,4 @@
-package com.mario.gamermvvmapp.domain.repository
+package com.mario.gamermvvmapp.di.repository
 
 import com.google.firebase.auth.FirebaseUser
 import com.mario.gamermvvmapp.domain.model.Response
