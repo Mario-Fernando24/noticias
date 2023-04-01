@@ -5,5 +5,6 @@ data class Post(
     var description: String = "",
     var privacy: String = "",
     var image: String = "",
-    var idUser: String = ""
+    var idUser: String = "",
+    var user: User=User()
 )

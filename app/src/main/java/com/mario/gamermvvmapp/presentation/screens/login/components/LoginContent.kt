@@ -41,12 +41,12 @@ fun LoginContent(navController: NavController, viewModel: LoginViewModel= hiltVi
                 .background(greyFondo)
         ){
             Column (
-                modifier = Modifier.fillMaxWidth().padding(top = 60.dp),
+                modifier = Modifier.fillMaxWidth().padding(top = 50.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
                 Image(
-                    modifier = Modifier.height(100.dp).width(310.dp),
-                    painter = painterResource(id= R.drawable.nttdata
+                    modifier = Modifier.height(120.dp).width(330.dp),
+                    painter = painterResource(id= R.drawable.travel
                     ) ,
                     contentDescription = "Control de xbox 360")
                 //ext(

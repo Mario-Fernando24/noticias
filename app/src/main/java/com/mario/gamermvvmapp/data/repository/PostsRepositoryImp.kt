@@ -6,10 +6,15 @@ import com.google.firebase.storage.StorageReference
 import com.mario.gamermvvmapp.core.Constant
 import com.mario.gamermvvmapp.domain.model.Post
 import com.mario.gamermvvmapp.domain.model.Response
+import com.mario.gamermvvmapp.domain.model.User
 import com.mario.gamermvvmapp.domain.repository.PostsRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.io.File
 import javax.inject.Inject
@@ -17,6 +22,7 @@ import javax.inject.Named
 
 class PostsRepositoryImp @Inject constructor(
     @Named(Constant.POSTS_COLECTION) private val postsRef: CollectionReference,
+    @Named(Constant.USERS_COLECTION) private val usersRef: CollectionReference,
     @Named(Constant.POSTS_COLECTION) private val storagePostsRef: StorageReference
 ): PostsRepository {
 
@@ -44,14 +50,29 @@ class PostsRepositoryImp @Inject constructor(
         val snapshotListener = postsRef.addSnapshotListener{
             snapshot, e ->
 
-            val postsResponse = if(snapshot!=null){
-                val posts = snapshot.toObjects(Post::class.java)
+            GlobalScope.launch(Dispatchers.IO) {
 
-                Response.Success(posts)
-            }else{
-                Response.Failure(e)
+                val postsResponse = if(snapshot!=null){
+
+                    val posts = snapshot.toObjects(Post::class.java)
+                    posts.map { po->
+                        async {
+                            po.user= usersRef.document(po.idUser).get().await().toObject(User::class.java)!!
+                        }
+                    }.forEach{
+                        it.await( )
+                    }
+
+                    Response.Success(posts)
+
+                }else{
+                    Response.Failure(e)
+                }
+                trySend(postsResponse)
+
             }
-            trySend(postsResponse)
+
+
         }
         //dejamos de escuchar cuando no sea necesario
         awaitClose {

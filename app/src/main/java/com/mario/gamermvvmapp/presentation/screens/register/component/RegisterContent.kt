@@ -50,8 +50,8 @@ fun RegisterContent (navController: NavController, viewModel: RegisterViewModel 
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
                 Image(
-                    modifier = Modifier.height(140.dp).width(310.dp),
-                    painter = painterResource(id= R.drawable.user
+                    modifier = Modifier.height(120.dp).width(330.dp),
+                    painter = painterResource(id= R.drawable.travel
                     ) ,
                     contentDescription = "Control de xbox 360")
                 //ext(
