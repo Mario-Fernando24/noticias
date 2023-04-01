@@ -7,6 +7,9 @@ import com.mario.gamermvvmapp.core.Constant
 import com.mario.gamermvvmapp.domain.model.Post
 import com.mario.gamermvvmapp.domain.model.Response
 import com.mario.gamermvvmapp.domain.repository.PostsRepository
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import java.io.File
 import javax.inject.Inject
@@ -35,6 +38,26 @@ class PostsRepositoryImp @Inject constructor(
             e.printStackTrace()
             Response.Failure(e)
         }
+    }
+
+    override fun getPosts(): Flow<Response<List<Post>>> = callbackFlow{
+        val snapshotListener = postsRef.addSnapshotListener{
+            snapshot, e ->
+
+            val postsResponse = if(snapshot!=null){
+                val posts = snapshot.toObjects(Post::class.java)
+
+                Response.Success(posts)
+            }else{
+                Response.Failure(e)
+            }
+            trySend(postsResponse)
+        }
+        //dejamos de escuchar cuando no sea necesario
+        awaitClose {
+            snapshotListener.remove()
+        }
+        TODO("Not yet implemented")
     }
 
 }

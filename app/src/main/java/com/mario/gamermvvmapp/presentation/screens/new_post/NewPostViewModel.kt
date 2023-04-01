@@ -114,6 +114,16 @@ class NewPostViewModel @Inject constructor(
         }
     }
 
+    fun clearForm(){
+        state= state.copy(
+            name = "",
+            description = "",
+            privacy = ""
+        )
+
+        savePostResponse = null
+    }
+
 
     fun savePost(post: Post) = viewModelScope.launch {
 

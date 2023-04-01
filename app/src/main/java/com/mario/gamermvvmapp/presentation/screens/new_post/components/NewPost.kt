@@ -22,7 +22,7 @@ fun NewPost(navController: NavController, viewModel: NewPostViewModel = hiltView
 
         is Response.Success->{
             Toast.makeText(LocalContext.current,"Publicación guardada correctamente", Toast.LENGTH_LONG).show()
-
+            viewModel.clearForm()
             //efectos secundarios
          //   LaunchedEffect(Unit){
 
@@ -33,6 +33,7 @@ fun NewPost(navController: NavController, viewModel: NewPostViewModel = hiltView
 
             //  }
             //}
+
         }
 
         is Response.Failure->{

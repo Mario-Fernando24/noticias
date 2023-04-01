@@ -73,21 +73,23 @@ fun NewPostContent(viewModel: NewPostViewModel = hiltViewModel()){
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 60.dp),
+                        .padding(top = 20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     if( viewModel.state.image!=""){ //Si se selecciono una imagen
                         AsyncImage(
                             modifier = Modifier
-                                .height(150.dp)
-                                .width(150.dp)
-                                .clip(CircleShape)
+                               // .height(150.dp)
+                                .width(450.dp)
+                                //.fillMaxWidth()
+                                .fillMaxHeight()
+                               // .clip(CircleShape)
                                 .clickable {
                                     dialogState.value = true
                                 },
                             model = viewModel.state.image,
                             contentDescription = "Selected image",
-                            contentScale = ContentScale.Crop
+                           // contentScale = ContentScale.Crop
                         )
 
                     }else{
