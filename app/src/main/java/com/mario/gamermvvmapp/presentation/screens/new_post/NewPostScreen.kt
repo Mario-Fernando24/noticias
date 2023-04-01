@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.mario.gamermvvmapp.presentation.components.DefaultButton
 import com.mario.gamermvvmapp.presentation.components.DefaultTolbar
+import com.mario.gamermvvmapp.presentation.screens.new_post.components.NewPost
 import com.mario.gamermvvmapp.presentation.screens.new_post.components.NewPostContent
 
 @Composable
@@ -35,6 +36,8 @@ fun NewPostScreen(navController: NavHostController, viewModel: NewPostViewModel 
                 })
         }
     )
+
+    NewPost(navController)
 
 
 

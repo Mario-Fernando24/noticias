@@ -5,19 +5,21 @@ import android.util.Log
 import com.google.firebase.firestore.CollectionReference
 
 import com.google.firebase.storage.StorageReference
+import com.mario.gamermvvmapp.core.Constant
 import com.mario.gamermvvmapp.domain.model.Response
 import com.mario.gamermvvmapp.domain.model.User
-import com.mario.gamermvvmapp.di.repository.UsersRepository
+import com.mario.gamermvvmapp.domain.repository.UsersRepository
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import java.io.File
 import javax.inject.Inject
+import javax.inject.Named
 
 class UsersRepositoryImp @Inject constructor(
-    private val userRef: CollectionReference,
-    private val storageUsersRef: StorageReference
+    @Named(Constant.USERS_COLECTION) private val userRef: CollectionReference,
+    @Named(Constant.USERS_COLECTION) private val storageUsersRef: StorageReference
     ): UsersRepository {
 
     //manera antigua

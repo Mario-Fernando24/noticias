@@ -1,6 +1,6 @@
 package com.mario.gamermvvmapp.domain.use_cases.users
 
-import com.mario.gamermvvmapp.di.repository.UsersRepository
+import com.mario.gamermvvmapp.domain.repository.UsersRepository
 import java.io.File
 import javax.inject.Inject
 

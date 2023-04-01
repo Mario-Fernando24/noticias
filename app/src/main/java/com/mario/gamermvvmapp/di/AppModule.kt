@@ -10,16 +10,20 @@ import com.google.firebase.storage.StorageReference
 import com.mario.gamermvvmapp.core.Constant.POSTS_COLECTION
 import com.mario.gamermvvmapp.core.Constant.USERS_COLECTION
 import com.mario.gamermvvmapp.data.repository.AuthRepositoryImp
+import com.mario.gamermvvmapp.data.repository.PostsRepositoryImp
 import com.mario.gamermvvmapp.data.repository.UsersRepositoryImp
-import com.mario.gamermvvmapp.di.repository.AuthRepository
-import com.mario.gamermvvmapp.di.repository.UsersRepository
+import com.mario.gamermvvmapp.domain.repository.AuthRepository
+import com.mario.gamermvvmapp.domain.repository.PostsRepository
+import com.mario.gamermvvmapp.domain.repository.UsersRepository
 import com.mario.gamermvvmapp.domain.use_cases.auth.*
+import com.mario.gamermvvmapp.domain.use_cases.posts.PostsUseCase
 import com.mario.gamermvvmapp.domain.use_cases.users.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.grpc.Context.Storage
+import javax.inject.Named
 
 //proveer la instancia de firebase con la inyeccion de dependencia
 @InstallIn(SingletonComponent::class)
@@ -40,23 +44,20 @@ object AppModule {
     //               COLECCION USERS AGREGAR IMAGEN AND COLECTION
     //==========================================================================================
     @Provides
+    @Named(USERS_COLECTION)
     fun provideStorageUsersRef(storage: FirebaseStorage): StorageReference= storage.reference.child(USERS_COLECTION)
 
     @Provides
+    @Named(USERS_COLECTION)
     fun provideUserRef(db: FirebaseFirestore): CollectionReference = db.collection(USERS_COLECTION)
 
-    //==========================================================================================
-    //                                  END
-    //==========================================================================================
 
-
-    //==========================================================================================
-    //               COLECCION POST AGREGAR IMAGEN AND COLECTION
-    //==========================================================================================
     @Provides
+    @Named(POSTS_COLECTION)
     fun provideStoragePostsRef(storage: FirebaseStorage): StorageReference= storage.reference.child(POSTS_COLECTION)
 
     @Provides
+    @Named(POSTS_COLECTION)
     fun providePostsRef(db: FirebaseFirestore): CollectionReference = db.collection(POSTS_COLECTION)
     //==========================================================================================
     //                        END
@@ -72,6 +73,8 @@ object AppModule {
 
     @Provides
     fun providerUsersRepository(imp:  UsersRepositoryImp): UsersRepository = imp
+    @Provides
+    fun providerPostRepository(imp:  PostsRepositoryImp): PostsRepository = imp
 
     @Provides
     fun providerAuthUseCase(repository: AuthRepository) = AuthUseCases(
@@ -88,4 +91,9 @@ object AppModule {
         update = Update(repository),
         saveImage = SaveImage(repository)
         )
+
+    @Provides
+    fun providerPostsUseCase(repository: PostsRepository) = PostsUseCase(
+        create = com.mario.gamermvvmapp.domain.use_cases.posts.CreatePost(repository)
+    )
 }

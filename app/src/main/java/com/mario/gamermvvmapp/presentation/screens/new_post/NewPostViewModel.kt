@@ -3,12 +3,20 @@ package com.mario.gamermvvmapp.presentation.screens.new_post
 import android.content.Context
 import android.util.Log
 import android.util.Patterns
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mario.gamermvvmapp.R
+import com.mario.gamermvvmapp.domain.model.Post
+import com.mario.gamermvvmapp.domain.model.Response
+import com.mario.gamermvvmapp.domain.model.User
+import com.mario.gamermvvmapp.domain.use_cases.auth.AuthUseCases
+import com.mario.gamermvvmapp.domain.use_cases.posts.PostsUseCase
+import com.mario.gamermvvmapp.domain.use_cases.users.UsersUseCase
 import com.mario.gamermvvmapp.presentation.utils.ComposeFileProvider
 import com.mario.gamermvvmapp.presentation.utils.ResultingActivityHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,11 +24,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
-
 @HiltViewModel
 class NewPostViewModel @Inject constructor(
-    @ApplicationContext private val context: Context
-) :ViewModel(){
+    @ApplicationContext private val context: Context, private val postsUseCase: PostsUseCase,
+    private val useCases: UsersUseCase, private val authUseCases: AuthUseCases,
+) : ViewModel(){
 
     var state by mutableStateOf(NewPostState())
     var  file: File? = null
@@ -45,6 +53,18 @@ class NewPostViewModel @Inject constructor(
         PrivacyRadioButton("solo amigos", R.drawable.friends),
         PrivacyRadioButton("privado", R.drawable.privacy)
     )
+    var userData by mutableStateOf(User())
+    var savePostResponse by mutableStateOf<Response<Boolean>?>(null)
+
+    init {
+        getUserId()
+    }
+
+    private fun getUserId() = viewModelScope.launch{
+        useCases.getUserById(authUseCases.getCurrentUserg()!!.uid).collect(){ user->
+            userData=user
+        }
+    }
 
     fun onNameInput(name: String){
         state =state.copy(name=name)
@@ -58,9 +78,7 @@ class NewPostViewModel @Inject constructor(
         state =state.copy(privacy=privacy)
     }
 
-    fun onImageInput(image: String){
-        state =state.copy(image = image)
-    }
+
 
     fun pickImage()= viewModelScope.launch {
         val result = resultingActivityHandler.getContent("image/*")
@@ -82,10 +100,26 @@ class NewPostViewModel @Inject constructor(
     }
 
     fun onNewPost(){
-        Log.d("MARIO","Nombre "+state.name);
-        Log.d("MARIO","Descripción"+state.description);
-        Log.d("MARIO","Privacidad "+state.privacy);
-        Log.d("MARIO","Imagen "+state.image);
+
+        if(state.name!="" && state.description!="" && state.privacy!="" && state.image!="") {
+            val posts = Post(
+                name = state.name,
+                description = state.description,
+                privacy = state.privacy,
+                idUser = userData.id
+            )
+            savePost(posts)
+        }else{
+            Toast.makeText(context,"Tiene algun campo vacio", Toast.LENGTH_LONG).show()
+        }
+    }
+
+
+    fun savePost(post: Post) = viewModelScope.launch {
+
+            savePostResponse = Response.Loading
+            val result = postsUseCase.create(post, file!!)
+            savePostResponse = result
     }
 
 
@@ -99,25 +133,24 @@ class NewPostViewModel @Inject constructor(
             isNameValid=false
             nameErrMsg="La publicacion debe tener un titulo"
         }
-      //  enableLoginButton()
+        //  enableLoginButton()
     }
 
     fun validateDescription(){
 
         if(state.description.isNotEmpty()){
-                isDescriptionValid=true
-                descriptionErrMsg=""
-            }else{
-                isDescriptionValid=false
-                descriptionErrMsg="Por favor agregar una descripción"
-            }
+            isDescriptionValid=true
+            descriptionErrMsg=""
+        }else{
+            isDescriptionValid=false
+            descriptionErrMsg="Por favor agregar una descripción"
+        }
     }
 
-
+    data class PrivacyRadioButton(
+        var nombre:String,
+        var image: Int
+    )
 
 }
 
-data class PrivacyRadioButton(
-    var nombre:String,
-    var image: Int
-)

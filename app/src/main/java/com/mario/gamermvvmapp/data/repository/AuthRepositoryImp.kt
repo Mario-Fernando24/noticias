@@ -4,7 +4,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.mario.gamermvvmapp.domain.model.Response
 import com.mario.gamermvvmapp.domain.model.User
-import com.mario.gamermvvmapp.di.repository.AuthRepository
+import com.mario.gamermvvmapp.domain.repository.AuthRepository
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 //aqui tenemos la implementacion de los metodos que hicimos en la capa de dominio
