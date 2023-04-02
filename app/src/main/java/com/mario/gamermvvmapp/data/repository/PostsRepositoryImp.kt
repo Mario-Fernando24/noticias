@@ -53,11 +53,25 @@ class PostsRepositoryImp @Inject constructor(
             GlobalScope.launch(Dispatchers.IO) {
 
                 val postsResponse = if(snapshot!=null){
-
                     val posts = snapshot.toObjects(Post::class.java)
-                    posts.map { po->
+                    //optimizamos para que no haga muchas peticiones si no que agrupe los id que sin repetirse
+
+                    val idUserArray = ArrayList<String>()
+
+                    posts.forEach { it ->
+                       idUserArray.add(it.idUser)
+                    }
+
+                    val idUserList = idUserArray.toSet().toList() //ELEMENTOS SIN REPETIR
+
+                    idUserList.map { id->
                         async {
-                            po.user= usersRef.document(po.idUser).get().await().toObject(User::class.java)!!
+                          val user= usersRef.document(id).get().await().toObject(User::class.java)!!
+                            posts.forEach { post->
+                                if(post.idUser == id){
+                                    post.user = user
+                                }
+                            }
                         }
                     }.forEach{
                         it.await( )

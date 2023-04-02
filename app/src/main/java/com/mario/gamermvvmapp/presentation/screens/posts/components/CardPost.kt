@@ -46,13 +46,13 @@ fun CardPost(post: Post){
                 modifier = Modifier.padding(start = 10.dp, bottom = 10.dp, top = 10.dp)
             ) {
 
-                if( post.user.image!=""){ //Si se selecciono una imagen
+                if( post.user?.image!=""){ //Si se selecciono una imagen
                     AsyncImage(
                         modifier = Modifier
                             .height(30.dp)
                             .width(30.dp)
                             .clip(CircleShape),
-                        model = post.user.image,
+                        model = post.user?.image ?:"",
                         contentDescription = "",
                         contentScale = ContentScale.Crop
                     )
@@ -69,7 +69,7 @@ fun CardPost(post: Post){
 
                 Text(
                     modifier=Modifier.padding(top = 10.dp, start = 10.dp),
-                    text = post.user.username,
+                    text = post.user?.username ?:" ",
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold
                 )
