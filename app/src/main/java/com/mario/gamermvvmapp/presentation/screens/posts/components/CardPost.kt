@@ -16,18 +16,24 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.mario.gamermvvmapp.R
 import com.mario.gamermvvmapp.domain.model.Post
+import com.mario.gamermvvmapp.presentation.navigation.DetailsScreen
 
 @Composable
-fun CardPost(post: Post){
+fun CardPost(navController: NavHostController,post: Post){
 
     Card(elevation = 4.dp,
         //bordes redondeados
         shape = RoundedCornerShape(20.dp),
         contentColor = Color.White,
         modifier = Modifier.padding(top = 15.dp)
+            .clickable {
+                navController.navigate(route = DetailsScreen.DetailsPost.passPost(post.toJson()))
+            }
     ) {
 
         Column() {

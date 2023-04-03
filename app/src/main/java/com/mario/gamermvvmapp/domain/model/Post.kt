@@ -1,5 +1,9 @@
 package com.mario.gamermvvmapp.domain.model
 
+import com.google.gson.Gson
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
+
 data class Post(
     var name: String = "",
     var description: String = "",
@@ -8,4 +12,25 @@ data class Post(
     var idUser: String = "",
     //var user: User=User()
     var user: User?=null
-)
+){
+    fun toJson(): String = Gson().toJson(Post(
+        name,
+        description,
+        privacy,
+        if (image != "") URLEncoder.encode(image, StandardCharsets.UTF_8.toString()) else "",
+        idUser,
+        User(
+            id = user?.id ?: "",
+            username = user?.username ?: "",
+            email = user?.email ?: "",
+            image =
+            if (!user?.image.isNullOrBlank())
+                URLEncoder.encode(user?.image, StandardCharsets.UTF_8.toString())
+            else "",
+        ),
+    ))
+
+    companion object {
+        fun fromJson(data: String): Post = Gson().fromJson(data, Post::class.java)
+    }
+}

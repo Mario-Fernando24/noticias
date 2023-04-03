@@ -8,12 +8,15 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.mario.gamermvvmapp.domain.model.Post
-
 
 //pasamos una lista de post (publicaciones)
 @Composable
-fun PostContents(posts: List<Post>){
+fun PostContents(
+    navController: NavHostController
+    ,posts: List<Post>){
 
     LazyColumn(
         modifier = Modifier.fillMaxWidth().
@@ -21,7 +24,7 @@ fun PostContents(posts: List<Post>){
     ){
         //cuales son los elementos que se van a mostrar
         items(items=posts){post->
-            CardPost(post = post)
+            CardPost(navController,post = post)
         }
     }
 }
