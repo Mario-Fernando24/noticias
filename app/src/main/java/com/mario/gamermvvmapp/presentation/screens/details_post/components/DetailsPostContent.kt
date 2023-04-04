@@ -62,7 +62,7 @@ fun DetailsPostContent(viewModel: DetailsPostViewModel = hiltViewModel()){
                     modifier = Modifier
                         .size(20.dp)
                         .clip(CircleShape),
-                    model = viewModel.post.image,
+                    model = viewModel.post.user?.image ?:  "",
                     contentDescription = "",
                     contentScale = ContentScale.Crop
                 )
@@ -108,7 +108,14 @@ fun DetailsPostContent(viewModel: DetailsPostViewModel = hiltViewModel()){
 
                 Image(
                     modifier = Modifier.size(25.dp),
-                    painter = painterResource(id= R.drawable.privacy) ,
+                    painter =
+
+                    painterResource(
+                        id=  if(viewModel.post.privacy=="privado") R.drawable.privacy
+                          else if(viewModel.post.privacy=="publico") R.drawable.public_relation
+                          else if(viewModel.post.privacy=="solo amigos") R.drawable.friends
+                          else R.drawable.user
+                    ) ,
                     contentDescription = ""
                 )
                 Spacer(modifier = Modifier.width(7.dp))
