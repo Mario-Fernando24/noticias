@@ -20,12 +20,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.mario.gamermvvmapp.R
+import com.mario.gamermvvmapp.presentation.screens.details_post.DetailsPostViewModel
+import com.mario.gamermvvmapp.presentation.screens.profile_edit.ProfileEditViewModel
 import com.mario.gamermvvmapp.presentation.ui.theme.red500
 
 @Composable
-fun DetailsPostContent(){
+fun DetailsPostContent(viewModel: DetailsPostViewModel = hiltViewModel()){
 
     Column(
         modifier = Modifier
@@ -37,7 +41,7 @@ fun DetailsPostContent(){
             modifier = Modifier
                 .fillMaxWidth()
                 .height(300.dp),
-            model = "",
+            model = viewModel.post.image,
             contentDescription = ""
         )
 
@@ -56,18 +60,18 @@ fun DetailsPostContent(){
 
                 AsyncImage(
                     modifier = Modifier
-                        .size(55.dp)
+                        .size(20.dp)
                         .clip(CircleShape),
-                    model = "",
+                    model = viewModel.post.image,
                     contentDescription = "",
                     contentScale = ContentScale.Crop
                 )
 
                 Column(
-                    modifier = Modifier.padding(top = 7.dp, start = 20.dp)
+                    modifier = Modifier.padding(top = 3.dp, start = 20.dp)
                 ) {
                     Text(
-                        text = "Nombre del usuario",
+                        text = viewModel.post.user?.username ?: "",
                         fontSize = 13.sp
                     )
 
@@ -84,11 +88,12 @@ fun DetailsPostContent(){
 
         Text(
             modifier = Modifier.padding(start = 20.dp, bottom = 15.dp),
-            text = "Titulo de la publicación",
+            text = viewModel.post.name,
             fontSize = 20.sp,
             color = red500,
         )
 
+        Divider(modifier = Modifier.padding(end = 20.dp, top = 10.dp, bottom = 10.dp), startIndent = 20.dp , thickness = 2.dp, color = Color.Gray)
 
         Card(
             modifier = Modifier.padding(start = 13.dp, bottom = 15.dp),
@@ -108,7 +113,7 @@ fun DetailsPostContent(){
                 )
                 Spacer(modifier = Modifier.width(7.dp))
 
-                Text(text = "Privacidad", fontWeight = FontWeight.Bold, fontSize = 17.sp)
+                Text(text = viewModel.post.privacy, fontWeight = FontWeight.Bold, fontSize = 17.sp)
 
             }
 
@@ -121,7 +126,7 @@ fun DetailsPostContent(){
             text = "Descripcion", fontWeight = FontWeight.Bold, fontSize = 17.sp)
         Text(
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
-            text = "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            text = viewModel.post.description,
             fontSize = 13.sp)
 
 

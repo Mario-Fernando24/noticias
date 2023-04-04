@@ -12,7 +12,7 @@ import com.mario.gamermvvmapp.presentation.screens.posts.PostViewModel
 import com.mario.gamermvvmapp.presentation.screens.posts.components.GetPost
 
 @Composable
-fun DetailsPostScreen(navController:  NavHostController,post: String ,viewModel: PostViewModel = hiltViewModel() ){
+fun DetailsPostScreen(navController:  NavHostController,post: String  ){
 
     Scaffold(
         content = {
