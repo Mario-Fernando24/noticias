@@ -1,9 +1,13 @@
 package com.mario.gamermvvmapp.presentation.navigation
 
+import android.util.Log
 import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.mario.gamermvvmapp.domain.model.Post
+import com.mario.gamermvvmapp.domain.model.User
 import com.mario.gamermvvmapp.presentation.screens.details_post.DetailsPostScreen
+import com.mario.gamermvvmapp.presentation.screens.my_post.contents.MyPostContents
+import com.mario.gamermvvmapp.presentation.screens.my_post.editarPost.EditarMyPostScreen
 import com.mario.gamermvvmapp.presentation.screens.new_post.NewPostScreen
 import com.mario.gamermvvmapp.presentation.screens.new_post.NewPostViewModel
 import com.mario.gamermvvmapp.presentation.screens.profile_edit.ProfileEditScreen
@@ -51,6 +55,26 @@ fun NavGraphBuilder.detailsNavGraph(navController: NavHostController){
 
       }
 
+
+      //editar mis publicaciones
+
+      composable(route= DetailsScreen.EditMyPost.route,
+          arguments = listOf(navArgument("post")
+          {
+              type = NavType.StringType
+          })
+      ){
+          it.arguments?.getString("post")?.let { data->
+
+
+
+              Log.d("MARIO FERNANDO sdds",""+data)
+              // abrimos la pantalla
+              EditarMyPostScreen(navController = navController, post = data)
+          }
+
+      }
+
   }
 
 }
@@ -68,6 +92,11 @@ sealed class DetailsScreen(val route: String){
 
     object DetailsPost: DetailsScreen("post/details/{post}"){
         fun passPost(post: String) = "post/details/$post"
+    }
+
+
+    object EditMyPost: DetailsScreen("post/edit/{post}"){
+        fun passPostEdit(post: String) = "post/edit/$post"
     }
 
 }

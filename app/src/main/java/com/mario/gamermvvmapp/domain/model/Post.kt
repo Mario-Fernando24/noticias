@@ -34,5 +34,6 @@ data class Post(
 
     companion object {
         fun fromJson(data: String): Post = Gson().fromJson(data, Post::class.java)
+
     }
 }

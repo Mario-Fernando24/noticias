@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
@@ -14,10 +13,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.mario.gamermvvmapp.presentation.navigation.DetailsScreen
 import com.mario.gamermvvmapp.presentation.screens.my_post.contents.GetMyPost
-import com.mario.gamermvvmapp.presentation.screens.my_post.contents.MyPostContents
+import com.mario.gamermvvmapp.presentation.screens.my_post.editarPost.EditarMyPostViewModel
 
 @Composable
-fun MyPostScreen(navController: NavHostController, viewModel: My_PostViewModel = hiltViewModel()){
+fun MyPostScreen(navController: NavHostController, viewModel: EditarMyPostViewModel = hiltViewModel()){
 
     Scaffold(
 

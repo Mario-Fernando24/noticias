@@ -5,12 +5,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,8 +27,11 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.mario.gamermvvmapp.R
 import com.mario.gamermvvmapp.domain.model.Post
+import com.mario.gamermvvmapp.domain.model.User
 import com.mario.gamermvvmapp.presentation.navigation.DetailsScreen
 import com.mario.gamermvvmapp.presentation.screens.my_post.My_PostViewModel
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 
 @Composable
@@ -70,20 +75,46 @@ fun CardMyPost(navController: NavHostController,post: Post, viewModel: My_PostVi
                 maxLines = 2,
                 color = Color.Gray
             )
-            
-            IconButton(
-                onClick = {
-                    viewModel.delete(post.id)
-                }
-            ) {
-              Icon(
-                  modifier = Modifier.size(40.dp),
-                  imageVector = Icons.Default.Delete,
-                  contentDescription = "",
-                  tint = Color.White
-              )
-            }
 
+            Row(
+                Modifier
+                    .fillMaxWidth().padding(start = 250.dp)
+                    .height(30.dp)
+            ) {
+
+                IconButton(
+                    onClick = {
+                        viewModel.delete(post.id)
+                    }
+                ) {
+                    Icon(
+                        modifier = Modifier.size(20.dp),
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "",
+                        tint = Color.White
+                    )
+                }
+
+
+                IconButton(
+
+                        onClick = {
+
+
+                            post.image= URLEncoder.encode(post.image,
+                               StandardCharsets.UTF_8.toString())
+                            navController.navigate(route = DetailsScreen.EditMyPost.passPostEdit(post.toJson()))
+                    }
+                ) {
+                    Icon(
+                        modifier = Modifier.size(20.dp),
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "",
+                        tint = Color.Green
+                    )
+                }
+
+            }
 
         }
 

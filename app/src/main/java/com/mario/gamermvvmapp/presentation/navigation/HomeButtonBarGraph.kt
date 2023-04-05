@@ -51,12 +51,12 @@ sealed class HomeButtonBarScreen(
     //primera pestaña
     object Posts: HomeButtonBarScreen(
         route = "posts",
-        title = "Posts",
+        title = "Noticias",
         icon = Icons.Default.List
     )
     object MyPosts: HomeButtonBarScreen(
         route = "my_post",
-        title = "Mis post",
+        title = "Mis publicaciones",
         icon = Icons.Outlined.List
     )
 
