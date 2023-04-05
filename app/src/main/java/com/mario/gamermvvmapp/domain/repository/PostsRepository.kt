@@ -12,4 +12,11 @@ interface PostsRepository {
    //Flow para obtener la data en tiempo real
     //obtenemos una list de post (publicaciones)
     fun getPosts(): Flow<Response<List<Post>>>
+
+    //obtener todos los post
+    fun getPostsByUserId(idUser: String): Flow<Response<List<Post>>>
+
+    //eliminar post
+    suspend fun delete(idPost: String): Response<Boolean>
+
 }

@@ -10,18 +10,19 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.mario.gamermvvmapp.presentation.components.DefaultTolbar
 import com.mario.gamermvvmapp.presentation.navigation.DetailsScreen
+import com.mario.gamermvvmapp.presentation.screens.my_post.contents.GetMyPost
+import com.mario.gamermvvmapp.presentation.screens.my_post.contents.MyPostContents
 
 @Composable
-fun MyPostScreen(navController: NavHostController){
+fun MyPostScreen(navController: NavHostController, viewModel: My_PostViewModel = hiltViewModel()){
 
     Scaffold(
 
         content = {
-            Text(text = "My Post screen")
+            GetMyPost(navController = navController)
         },
         floatingActionButton = {
             FloatingActionButton(

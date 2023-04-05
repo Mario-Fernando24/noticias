@@ -5,6 +5,7 @@ import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
 data class Post(
+    var id: String = "",
     var name: String = "",
     var description: String = "",
     var privacy: String = "",
@@ -14,6 +15,7 @@ data class Post(
     var user: User?=null
 ){
     fun toJson(): String = Gson().toJson(Post(
+        id,
         name,
         description,
         privacy,

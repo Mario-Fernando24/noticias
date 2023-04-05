@@ -1,5 +1,6 @@
 package com.mario.gamermvvmapp.data.repository
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.storage.StorageReference
@@ -46,6 +47,7 @@ class PostsRepositoryImp @Inject constructor(
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun getPosts(): Flow<Response<List<Post>>> = callbackFlow{
         val snapshotListener = postsRef.addSnapshotListener{
             snapshot, e ->
@@ -93,6 +95,47 @@ class PostsRepositoryImp @Inject constructor(
             snapshotListener.remove()
         }
         TODO("Not yet implemented")
+    }
+
+    override fun getPostsByUserId(idUser: String): Flow<Response<List<Post>>> = callbackFlow{
+
+        val snapshotListener = postsRef.whereEqualTo("idUser", idUser).addSnapshotListener{
+                snapshot, e ->
+
+                val postsResponse = if(snapshot!=null){
+
+                    val posts = snapshot.toObjects(Post::class.java)
+
+                    snapshot.documents.forEachIndexed { index, docum ->
+                        posts[index].id = docum.id
+                    }
+
+                    Response.Success(posts)
+
+                }else{
+                    Response.Failure(e)
+                }
+                trySend(postsResponse)
+        }
+        awaitClose {
+            snapshotListener.remove()
+        }
+
+
+
+    }
+
+    override suspend fun delete(idPost: String): Response<Boolean> {
+
+        return try {
+
+            postsRef.document(idPost).delete().await()
+
+            Response.Success(true)
+        } catch (e: Exception) {
+        e.printStackTrace()
+        Response.Failure(e)
+    }
     }
 
 }
