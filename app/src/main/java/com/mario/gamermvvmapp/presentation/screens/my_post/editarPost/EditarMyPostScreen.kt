@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import com.mario.gamermvvmapp.presentation.components.DefaultButton
 import com.mario.gamermvvmapp.presentation.components.DefaultTolbar
 import com.mario.gamermvvmapp.presentation.screens.my_post.My_PostViewModel
+import com.mario.gamermvvmapp.presentation.screens.my_post.editarPost.contents.EditMyPostContents
 import com.mario.gamermvvmapp.presentation.screens.new_post.NewPostViewModel
 import com.mario.gamermvvmapp.presentation.screens.new_post.components.NewPostContent
 
@@ -25,15 +26,17 @@ fun EditarMyPostScreen(navController:  NavHostController,post: String, viewModel
                 navController=null)
         },
         content = {
-           // NewPostContent()
+            EditMyPostContents()
         },
 
         bottomBar = {
             DefaultButton(
-                modifier = Modifier.fillMaxWidth().padding(start = 24.dp, end = 24.dp, bottom = 20.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 24.dp, end = 24.dp, bottom = 20.dp),
                 text = "Editar",
                 onClick = {
-
+                    viewModel.onUpdatePost()
                 })
         }
     )

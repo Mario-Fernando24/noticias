@@ -33,7 +33,6 @@ fun DetailsPostContent(viewModel: DetailsPostViewModel = hiltViewModel()){
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
             .verticalScroll(rememberScrollState())
     ) {
 

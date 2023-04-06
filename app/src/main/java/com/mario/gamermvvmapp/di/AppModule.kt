@@ -16,10 +16,7 @@ import com.mario.gamermvvmapp.domain.repository.AuthRepository
 import com.mario.gamermvvmapp.domain.repository.PostsRepository
 import com.mario.gamermvvmapp.domain.repository.UsersRepository
 import com.mario.gamermvvmapp.domain.use_cases.auth.*
-import com.mario.gamermvvmapp.domain.use_cases.posts.DeletePost
-import com.mario.gamermvvmapp.domain.use_cases.posts.GetPost
-import com.mario.gamermvvmapp.domain.use_cases.posts.GetPostById
-import com.mario.gamermvvmapp.domain.use_cases.posts.PostsUseCase
+import com.mario.gamermvvmapp.domain.use_cases.posts.*
 import com.mario.gamermvvmapp.domain.use_cases.users.*
 import dagger.Module
 import dagger.Provides
@@ -100,6 +97,7 @@ object AppModule {
         create = com.mario.gamermvvmapp.domain.use_cases.posts.CreatePost(repository),
         getPost = GetPost(repository),
         getPostById = GetPostById(repository),
-        deletePost = DeletePost(repository)
+        deletePost = DeletePost(repository),
+        updatePost = UpdatePost(repository)
     )
 }

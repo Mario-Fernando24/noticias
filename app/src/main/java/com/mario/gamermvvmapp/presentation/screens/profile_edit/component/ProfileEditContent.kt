@@ -161,13 +161,9 @@ fun ProfileEditContent (navController: NavController, viewModel: ProfileEditView
                     icon = Icons.Default.Edit,
                     text = "ACTUALIZAR DATOS",
                     onClick ={
-                        // if(viewModel.userImageShow!=null){
-                        //   viewModel.onUpdate(viewModel.userImageShow)
-                        //}else{
-                        Log.d("MARIOF",""+viewModel.userImageShow)
+
                           viewModel.saveImage()
 
-                        //}
                     },
                 )
 

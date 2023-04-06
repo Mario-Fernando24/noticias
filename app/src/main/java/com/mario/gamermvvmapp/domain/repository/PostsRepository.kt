@@ -19,4 +19,8 @@ interface PostsRepository {
     //eliminar post
     suspend fun delete(idPost: String): Response<Boolean>
 
+    suspend fun updatePost(post: Post): Response<Boolean>
+
+
+
 }

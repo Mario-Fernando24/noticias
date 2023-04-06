@@ -2,7 +2,9 @@ package com.mario.gamermvvmapp.data.repository
 
 import android.annotation.SuppressLint
 import android.net.Uri
+import android.util.Log
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.storage.StorageReference
 import com.mario.gamermvvmapp.core.Constant
 import com.mario.gamermvvmapp.domain.model.Post
@@ -21,6 +23,7 @@ import java.io.File
 import javax.inject.Inject
 import javax.inject.Named
 
+
 class PostsRepositoryImp @Inject constructor(
     @Named(Constant.POSTS_COLECTION) private val postsRef: CollectionReference,
     @Named(Constant.USERS_COLECTION) private val usersRef: CollectionReference,
@@ -37,8 +40,10 @@ class PostsRepositoryImp @Inject constructor(
             val url = ref.downloadUrl.await()
              post.image=url.toString()
 
-            //DATA
-            postsRef.add(post).await()
+            val document: DocumentReference = postsRef.document()
+            post.id=document.id
+            document.set(post).await()
+
             Response.Success(true)
 
         } catch (e: Exception) {
@@ -50,7 +55,7 @@ class PostsRepositoryImp @Inject constructor(
     @SuppressLint("SuspiciousIndentation")
     override fun getPosts(): Flow<Response<List<Post>>> = callbackFlow{
         val snapshotListener = postsRef.addSnapshotListener{
-            snapshot, e ->
+                snapshot, e ->
 
             GlobalScope.launch(Dispatchers.IO) {
 
@@ -61,14 +66,14 @@ class PostsRepositoryImp @Inject constructor(
                     val idUserArray = ArrayList<String>()
 
                     posts.forEach { it ->
-                       idUserArray.add(it.idUser)
+                        idUserArray.add(it.idUser)
                     }
 
                     val idUserList = idUserArray.toSet().toList() //ELEMENTOS SIN REPETIR
 
                     idUserList.map { id->
                         async {
-                          val user= usersRef.document(id).get().await().toObject(User::class.java)!!
+                            val user= usersRef?.document(id).get().await().toObject(User::class.java)!!
                             posts.forEach { post->
                                 if(post.idUser == id){
                                     post.user = user
@@ -136,6 +141,36 @@ class PostsRepositoryImp @Inject constructor(
         e.printStackTrace()
         Response.Failure(e)
     }
+    }
+
+    override suspend fun updatePost(post: Post): Response<Boolean> {
+
+        return try {
+
+            Log.d("JUAN",""+post.name)
+            Log.d("JUAN",""+post.privacy)
+            Log.d("JUAN",""+post.description)
+            Log.d("JUAN",""+post.image)
+            Log.d("JUAN",""+post.id)
+
+
+            val map:MutableMap<String, Any> = HashMap()
+
+                map["id"] = post.id
+                map["name"] = post.name
+                map["description"] = post.description
+                map["privacy"] = post.privacy
+                map["image"] = post.image
+                map["idUser"] = post.idUser
+
+            postsRef.document(post.id).update(map).await()
+            Response.Success(true)
+
+        }catch (e: Exception){
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+
     }
 
 }

@@ -127,6 +127,11 @@ class NewPostViewModel @Inject constructor(
 
     fun savePost(post: Post) = viewModelScope.launch {
 
+        Log.d("MARIOFER","")
+        Log.d("MARIOFER","")
+        Log.d("MARIOFER",""+post.id)
+        Log.d("MARIOFER","")
+
             savePostResponse = Response.Loading
             val result = postsUseCase.create(post, file!!)
             savePostResponse = result

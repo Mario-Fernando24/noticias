@@ -24,7 +24,6 @@ class My_PostViewModel @Inject constructor(private val authUseCases: AuthUseCase
 
     init {
         getPost()
-        Log.d("MARIO F",""+authUseCases.getCurrentUserg()!!.uid)
     }
 
     fun delete(idPost:String) = viewModelScope.launch {

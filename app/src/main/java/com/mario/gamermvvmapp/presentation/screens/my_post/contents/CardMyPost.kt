@@ -30,6 +30,7 @@ import com.mario.gamermvvmapp.domain.model.Post
 import com.mario.gamermvvmapp.domain.model.User
 import com.mario.gamermvvmapp.presentation.navigation.DetailsScreen
 import com.mario.gamermvvmapp.presentation.screens.my_post.My_PostViewModel
+import com.mario.gamermvvmapp.presentation.ui.theme.red500
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
@@ -78,7 +79,7 @@ fun CardMyPost(navController: NavHostController,post: Post, viewModel: My_PostVi
 
             Row(
                 Modifier
-                    .fillMaxWidth().padding(start = 250.dp)
+                    .fillMaxWidth().padding(start = 250.dp,bottom = 15.dp )
                     .height(30.dp)
             ) {
 
@@ -88,7 +89,7 @@ fun CardMyPost(navController: NavHostController,post: Post, viewModel: My_PostVi
                     }
                 ) {
                     Icon(
-                        modifier = Modifier.size(20.dp),
+                        modifier = Modifier.size(30.dp),
                         imageVector = Icons.Default.Delete,
                         contentDescription = "",
                         tint = Color.White
@@ -99,18 +100,16 @@ fun CardMyPost(navController: NavHostController,post: Post, viewModel: My_PostVi
                 IconButton(
 
                         onClick = {
-
-
-                            post.image= URLEncoder.encode(post.image,
-                               StandardCharsets.UTF_8.toString())
+                          //  post.image= URLEncoder.encode(post.image,
+                            //   StandardCharsets.UTF_8.toString())
                             navController.navigate(route = DetailsScreen.EditMyPost.passPostEdit(post.toJson()))
                     }
                 ) {
                     Icon(
-                        modifier = Modifier.size(20.dp),
+                        modifier = Modifier.size(30.dp),
                         imageVector = Icons.Default.Edit,
                         contentDescription = "",
-                        tint = Color.Green
+                        tint = red500
                     )
                 }
 
