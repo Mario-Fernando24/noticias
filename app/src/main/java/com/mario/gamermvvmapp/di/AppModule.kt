@@ -98,6 +98,7 @@ object AppModule {
         getPost = GetPost(repository),
         getPostById = GetPostById(repository),
         deletePost = DeletePost(repository),
-        updatePost = UpdatePost(repository)
+        updatePost = UpdatePost(repository),
+        updatePostImage = UpdatePostImage(repository)
     )
 }

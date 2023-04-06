@@ -20,7 +20,6 @@ interface PostsRepository {
     suspend fun delete(idPost: String): Response<Boolean>
 
     suspend fun updatePost(post: Post): Response<Boolean>
-
-
+    suspend fun updateImagePost(file:File): Response<String>
 
 }

@@ -46,8 +46,11 @@ class EditarMyPostViewModel @Inject constructor(@ApplicationContext private val 
     var  file: File? = null
     val resultingActivityHandler = ResultingActivityHandler()
     var userImageShow: String by mutableStateOf("")
+    var saveImageResponse by mutableStateOf<Response<String>?>(null)
 
     init {
+        userImageShow=post?.image ?:""
+
         state = state.copy(
             id = post?.id ?:"",
             name = post?.name ?:"",
@@ -71,25 +74,30 @@ class EditarMyPostViewModel @Inject constructor(@ApplicationContext private val 
     }
 
 
-    fun pickImage()= viewModelScope.launch {
-        val result = resultingActivityHandler.getContent("image/*")
-        if (result!=null) {
-            file = ComposeFileProvider.createFileFromUri(context, result)
-            userImageShow =  result.toString()
 
+
+    fun UpdatePostImage() = viewModelScope.launch {
+        if(file!=null) {
+
+            saveImageResponse = Response.Loading
+            val result = postsUseCase.updatePostImage(file!!)
+            saveImageResponse = result
+        }else{
+
+            onUpdatePost(state.image)
         }
     }
 
-    fun onUpdatePost(){
+    fun onUpdatePost(url:String){
 
+        if(state.name!="" && state.description!="" && state.privacy!="") {
 
-        if(state.name!="" && state.description!="" && state.privacy!="" && state.image!="") {
             val posts = Post(
                 name = state.name,
                 description = state.description,
                 privacy = state.privacy,
                 idUser = state.idUser,
-                image=state.image,
+                image=url,
                 id = state.id
             )
             updatePost(posts)
@@ -100,16 +108,24 @@ class EditarMyPostViewModel @Inject constructor(@ApplicationContext private val 
 
 
     fun updatePost(post: Post)= viewModelScope.launch{
-        Log.d("NEGRYYYYY",""+post.name)
-        Log.d("NEGRYYYYY",""+post.description)
-        Log.d("NEGRYYYYY",""+post.privacy)
-        Log.d("NEGRYYYYY",""+post.id)
+
         _updateFlow = Response.Loading
           val resul= postsUseCase.updatePost(post)
         //resultado que nos devolvio esa peticion
          _updateFlow = resul
+
+
     }
 
+
+    fun pickImage()= viewModelScope.launch {
+        val result = resultingActivityHandler.getContent("image/*")
+        if (result!=null) {
+            file = ComposeFileProvider.createFileFromUri(context, result)
+            userImageShow =  result.toString()
+
+        }
+    }
 
     //METODO PARA TOMAR LA FOTOGRAFIA
     fun takePhoto()= viewModelScope.launch{

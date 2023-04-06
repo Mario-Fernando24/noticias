@@ -67,14 +67,14 @@ fun EditMyPostContents(viewModel: EditarMyPostViewModel = hiltViewModel()) {
                         .padding(top = 20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    if(viewModel.state.image!=""){ //Si se selecciono una imagen
+                    if(viewModel.userImageShow!=""){ //Si se selecciono una imagen
                         AsyncImage(
                             modifier = Modifier
                                 .width(1600.dp)
                                 .clickable {
                                     dialogState.value = true
                                 },
-                            model = viewModel.state.image,
+                            model = viewModel.userImageShow,
                             contentDescription = "Selected image",
                             // contentScale = ContentScale.Crop
                         )

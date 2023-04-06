@@ -173,4 +173,20 @@ class PostsRepositoryImp @Inject constructor(
 
     }
 
+    override suspend fun updateImagePost(file: File): Response<String> {
+
+            return try {
+                val fromFile =Uri.fromFile(file)
+                val ref = storagePostsRef.child(file.name)
+                val uploadTask = ref.putFile(fromFile).await()
+                val url = ref.downloadUrl.await()
+
+                return Response.Success(url.toString())
+
+            }catch (e: Exception){
+                e.printStackTrace()
+                Response.Failure(e)
+            }
+        }
+
 }

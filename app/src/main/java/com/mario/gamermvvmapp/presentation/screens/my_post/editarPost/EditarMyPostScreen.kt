@@ -13,8 +13,12 @@ import com.mario.gamermvvmapp.presentation.components.DefaultButton
 import com.mario.gamermvvmapp.presentation.components.DefaultTolbar
 import com.mario.gamermvvmapp.presentation.screens.my_post.My_PostViewModel
 import com.mario.gamermvvmapp.presentation.screens.my_post.editarPost.contents.EditMyPostContents
+import com.mario.gamermvvmapp.presentation.screens.my_post.editarPost.contents.UpdateMyPost
+import com.mario.gamermvvmapp.presentation.screens.my_post.editarPost.contents.UpdatePostImage
 import com.mario.gamermvvmapp.presentation.screens.new_post.NewPostViewModel
 import com.mario.gamermvvmapp.presentation.screens.new_post.components.NewPostContent
+import com.mario.gamermvvmapp.presentation.screens.profile_edit.component.SaveImage
+import com.mario.gamermvvmapp.presentation.screens.profile_edit.component.UpdateProfile
 
 @Composable
 fun EditarMyPostScreen(navController:  NavHostController,post: String, viewModel: EditarMyPostViewModel = hiltViewModel()){
@@ -36,8 +40,12 @@ fun EditarMyPostScreen(navController:  NavHostController,post: String, viewModel
                     .padding(start = 24.dp, end = 24.dp, bottom = 20.dp),
                 text = "Editar",
                 onClick = {
-                    viewModel.onUpdatePost()
+                    viewModel.UpdatePostImage()
                 })
         }
     )
+
+     UpdateMyPost(navController)
+     UpdatePostImage()
+
 }
