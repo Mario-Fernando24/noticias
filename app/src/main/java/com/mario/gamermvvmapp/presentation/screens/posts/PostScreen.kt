@@ -6,7 +6,9 @@ import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.mario.gamermvvmapp.presentation.screens.posts.components.DeleteLikePost
 import com.mario.gamermvvmapp.presentation.screens.posts.components.GetPost
+import com.mario.gamermvvmapp.presentation.screens.posts.components.LikePost
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
@@ -17,4 +19,8 @@ fun PostsScreen(navController: NavHostController, viewModel:PostViewModel = hilt
            GetPost(navController = navController)
         }
     )
+
+    LikePost()
+    DeleteLikePost()
+
 }

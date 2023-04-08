@@ -5,6 +5,7 @@ import android.net.Uri
 import android.util.Log
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.storage.StorageReference
 import com.mario.gamermvvmapp.core.Constant
 import com.mario.gamermvvmapp.domain.model.Post
@@ -135,12 +136,11 @@ class PostsRepositoryImp @Inject constructor(
         return try {
 
             postsRef.document(idPost).delete().await()
-
             Response.Success(true)
         } catch (e: Exception) {
         e.printStackTrace()
         Response.Failure(e)
-    }
+     }
     }
 
     override suspend fun updatePost(post: Post): Response<Boolean> {
@@ -183,11 +183,27 @@ class PostsRepositoryImp @Inject constructor(
         }
 
     override suspend fun likes(idPost: String, idUser: String): Response<Boolean> {
-        TODO("Not yet implemented")
+        return try {
+
+            postsRef.document(idPost).update("likes",FieldValue.arrayUnion(idUser)).await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Failure(e)
+        }
     }
 
     override suspend fun deleteLike(idPost: String, idUser: String): Response<Boolean> {
-        TODO("Not yet implemented")
+
+        return try {
+
+            postsRef.document(idPost).update("likes",FieldValue.arrayRemove(idUser)).await()
+            Response.Success(true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+
     }
 
 }

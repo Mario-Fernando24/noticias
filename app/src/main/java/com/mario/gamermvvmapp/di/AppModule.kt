@@ -99,6 +99,8 @@ object AppModule {
         getPostById = GetPostById(repository),
         deletePost = DeletePost(repository),
         updatePost = UpdatePost(repository),
-        updatePostImage = UpdatePostImage(repository)
+        updatePostImage = UpdatePostImage(repository),
+        deleteLike = DeleteLike(repository),
+        addLike = AddLike(repository)
     )
 }

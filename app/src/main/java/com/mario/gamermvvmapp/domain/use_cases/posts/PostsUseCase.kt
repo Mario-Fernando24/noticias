@@ -9,7 +9,9 @@ data class PostsUseCase (
     val getPostById: GetPostById,
     val deletePost: DeletePost,
     val updatePost: UpdatePost,
-    val updatePostImage: UpdatePostImage
+    val updatePostImage: UpdatePostImage,
+    val addLike: AddLike,
+    val deleteLike: DeleteLike
 )
 
 

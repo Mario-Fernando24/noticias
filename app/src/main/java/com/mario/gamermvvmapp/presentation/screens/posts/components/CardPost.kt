@@ -16,21 +16,24 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.mario.gamermvvmapp.R
 import com.mario.gamermvvmapp.domain.model.Post
 import com.mario.gamermvvmapp.presentation.navigation.DetailsScreen
+import com.mario.gamermvvmapp.presentation.screens.posts.PostViewModel
 
 @Composable
-fun CardPost(navController: NavHostController,post: Post){
+fun CardPost(navController: NavHostController,post: Post, viewModel: PostViewModel = hiltViewModel()){
 
     Card(elevation = 4.dp,
         //bordes redondeados
         shape = RoundedCornerShape(20.dp),
         contentColor = Color.White,
-        modifier = Modifier.padding(top = 15.dp)
+        modifier = Modifier
+            .padding(top = 15.dp)
             .clickable {
                 navController.navigate(route = DetailsScreen.DetailsPost.passPost(post.toJson()))
             }
@@ -97,8 +100,37 @@ fun CardPost(navController: NavHostController,post: Post){
                 color = Color.Gray
             )
 
+            Row() {
+                if(post.likes.contains(viewModel.currentUser!!.uid)){
 
-            
+                    Image(
+                        modifier = Modifier.padding(start = 10.dp,bottom= 10.dp )
+                            .size(25.dp)
+                            .clickable { viewModel.deleteLike(post.id, viewModel.currentUser!!.uid) },
+                        painter = painterResource(id = R.drawable.like),
+                        contentDescription =""
+                    )
+
+                }else{
+
+                    Image(
+                        modifier = Modifier.padding(start = 10.dp,bottom= 10.dp )
+                            .size(25.dp)
+                            .clickable { viewModel.like(post.id, viewModel.currentUser!!.uid) },
+                        painter = painterResource(id = R.drawable.like_outline),
+                        contentDescription =""
+                    )
+                }
+
+
+                Text(
+                    modifier = Modifier.padding(start = 10.dp,bottom= 10.dp ),
+                            text = post.likes.size.toString())
+
+
+                
+            }
+
         }
 
     }
