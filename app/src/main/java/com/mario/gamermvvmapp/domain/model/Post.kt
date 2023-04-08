@@ -12,7 +12,10 @@ data class Post(
     var image: String = "",
     var idUser: String = "",
     //var user: User=User()
-    var user: User?=null
+    var user: User?=null,
+    //array vacio
+    var likes: ArrayList<String> = ArrayList()
+
 ){
     fun toJson(): String = Gson().toJson(Post(
         id,
@@ -30,6 +33,7 @@ data class Post(
                 URLEncoder.encode(user?.image, StandardCharsets.UTF_8.toString())
             else "",
         ),
+        likes
     ))
 
     companion object {

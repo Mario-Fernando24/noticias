@@ -39,7 +39,6 @@ fun EditMyPostContents(viewModel: EditarMyPostViewModel = hiltViewModel()) {
         status = dialogState,
         takePhoto = { viewModel.takePhoto() },
         pickImage = { viewModel.pickImage() }
-
     )
 
     Box(

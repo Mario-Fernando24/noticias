@@ -21,5 +21,8 @@ interface PostsRepository {
 
     suspend fun updatePost(post: Post): Response<Boolean>
     suspend fun updateImagePost(file:File): Response<String>
+    //recibe el id del post y el id del usuario que le esta dando like
+    suspend fun likes(idPost: String, idUser: String): Response<Boolean>
+    suspend fun deleteLike(idPost: String, idUser: String): Response<Boolean>
 
 }

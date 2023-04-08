@@ -147,13 +147,6 @@ class PostsRepositoryImp @Inject constructor(
 
         return try {
 
-            Log.d("JUAN",""+post.name)
-            Log.d("JUAN",""+post.privacy)
-            Log.d("JUAN",""+post.description)
-            Log.d("JUAN",""+post.image)
-            Log.d("JUAN",""+post.id)
-
-
             val map:MutableMap<String, Any> = HashMap()
 
                 map["id"] = post.id
@@ -188,5 +181,13 @@ class PostsRepositoryImp @Inject constructor(
                 Response.Failure(e)
             }
         }
+
+    override suspend fun likes(idPost: String, idUser: String): Response<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteLike(idPost: String, idUser: String): Response<Boolean> {
+        TODO("Not yet implemented")
+    }
 
 }
